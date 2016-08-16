@@ -18,6 +18,16 @@ module Admin
 
     end
 
+    def show
+
+      begin
+        @institution = Institution.find(params[:id])
+      rescue ActiveRecord::RecordNotFound
+        head(:not_found)
+      end
+
+    end
+
     private
 
     def institution_params

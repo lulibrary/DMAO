@@ -32,6 +32,22 @@ module Admin
 
     end
 
+    test "returns 404 when no institution found for id" do
+
+      get :show, params: { :id => 12345 }
+
+      assert_response 404
+
+    end
+
+    test "returns institution for valid id" do
+
+      get :show, params: { :id => Institution.last.id }
+
+      assert assigns(:institution)
+
+    end
+
     private
 
     def valid_institution
