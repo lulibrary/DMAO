@@ -1,0 +1,37 @@
+<div class="page-title">
+  <div class="title_left">
+    <h3>All Institutions</h3>
+  </div>
+</div>
+
+<div class="clearfix"></div>
+
+<div class="col-md-12">
+  <div class="x_panel">
+
+    <div class="x_content">
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th>Identifier</th>
+          <th>Name</th>
+          <th>Contact Name</th>
+          <th>Contact Email</th>
+          <th>Contact Phone</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @institutions.each do |institution| %>
+            <tr>
+              <th scope="row"><%= institution.identifier %></th>
+              <td><%= institution.name %></td>
+              <td><%= institution.contact_name %></td>
+              <td><%= institution.contact_email %></td>
+              <td><%= institution.contact_phone_number %></td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -18,7 +18,6 @@
 //= require turbolinks
 
 //= require fastclick/lib/fastclick
-//= require nprogress/nprogress
 //= require Chart.js/dist/Chart.min
 //= require bernii/gauge.js/dist/gauge.min
 //= require bootstrap-progressbar/bootstrap-progressbar.min

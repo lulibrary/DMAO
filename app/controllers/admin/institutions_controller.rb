@@ -28,6 +28,10 @@ module Admin
 
     end
 
+    def index
+      @institutions = Institution.all
+    end
+
     private
 
     def institution_params
