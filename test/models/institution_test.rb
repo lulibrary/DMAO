@@ -43,4 +43,14 @@ class InstitutionTest < ActiveSupport::TestCase
     assert @institution.valid?
   end
 
+  test 'is valid with a valid email' do
+    @institution.contact_email = "admin@example.com"
+    assert @institution.valid?
+  end
+
+  test 'is invalid with non valid email' do
+    @institution.contact_email = "testing"
+    refute @institution.valid?
+  end
+
 end
