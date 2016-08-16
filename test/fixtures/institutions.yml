@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+luve:
+  name: Lune Valley Enterprise University
+  identifier: luve-u
+  contact_name: John Smith
+  contact_email: john@example.com
+  contact_phone_number: 00000-000000
+  locale: en-GB
+  url: www.example.com
+  description: Worst university in the north west.
