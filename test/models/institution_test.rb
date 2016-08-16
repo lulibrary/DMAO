@@ -7,7 +7,7 @@ class InstitutionTest < ActiveSupport::TestCase
   end
 
   test 'is valid' do
-    @institution.valid?
+    assert @institution.valid?
   end
 
   test 'identifier is required' do
@@ -26,6 +26,21 @@ class InstitutionTest < ActiveSupport::TestCase
 
     refute duplicate_institution.valid?
 
+  end
+
+  test 'allows a single string with numbers for institution identifier' do
+    @institution.identifier = 'abcd1234'
+    assert @institution.valid?
+  end
+
+  test 'does not allow spaces or non alpha numeric characters in institution identifier' do
+    @institution.identifier = 'abcd 1234'
+    refute @institution.valid?
+  end
+
+  test 'allows a dash within the institution identifier' do
+    @institution.identifier = 'abcd-1234'
+    assert @institution.valid?
   end
 
 end
