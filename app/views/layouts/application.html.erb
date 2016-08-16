@@ -1,14 +1,43 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>DMAO</title>
-    <%= csrf_meta_tags %>
+<head>
+  <title><%= content_for?(:title) ? yield(:title) : "DMA Online" %> </title>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
 
-  <body>
-    <%= yield %>
-  </body>
+  <%= csrf_meta_tags %>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+
+<body class="nav-md">
+  <div class="container body">
+    <div class="main_container">
+
+      <% flash.each do |key, value| %>
+          <div align="center" id="flash" class="alert alert-<%= key %>"><%= value %></div>
+      <% end %>
+
+      <%= render "partials/sidenav" %>
+
+      <%= render "partials/topnav" %>
+
+      <div class="right_col" role="main">
+
+        <div class="">
+          <%= yield %>
+        </div>
+
+      </div>
+
+      <%= render "partials/footer" %>
+
+    </div>
+
+
+  </div>
+
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+</body>
 </html>

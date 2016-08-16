@@ -1,0 +1,14 @@
+{
+  "name": "DMA_Online",
+  "authors": [
+	  "Stephen Robinson",
+	  "John Krug"
+  ],
+  "description": "DMA Online Administration and API",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "dependencies": {
+    "gentelella": "^1.1.0"
+  }
+}

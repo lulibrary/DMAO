@@ -13,3 +13,16 @@
  *= require_tree .
  *= require_self
  */
+
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+@import "font-awesome";
+
+@import "css/maps/jquery-jvectormap-2.0.3";
+@import "iCheck/skins/flat/green";
+@import "bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min";
+
+@import "css/custom";
+
+@import "pace";
