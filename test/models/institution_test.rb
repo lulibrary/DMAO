@@ -21,11 +21,8 @@ class InstitutionTest < ActiveSupport::TestCase
   end
 
   test 'does not allow a duplicate institution identifier' do
-
     duplicate_institution = @institution.dup
-
     refute duplicate_institution.valid?
-
   end
 
   test 'allows a single string with numbers for institution identifier' do
@@ -44,12 +41,12 @@ class InstitutionTest < ActiveSupport::TestCase
   end
 
   test 'is valid with a valid email' do
-    @institution.contact_email = "admin@example.com"
+    @institution.contact_email = 'admin@example.com'
     assert @institution.valid?
   end
 
   test 'is invalid with non valid email' do
-    @institution.contact_email = "testing"
+    @institution.contact_email = 'testing'
     refute @institution.valid?
   end
 

@@ -18,7 +18,7 @@ module Admin
 
     end
 
-    test "returns with errors when identifier is blank" do
+    test 'returns with errors when identifier is blank' do
 
       params = @institution_params
       params[:institution][:identifier] = nil
@@ -32,7 +32,7 @@ module Admin
 
     end
 
-    test "returns 404 when no institution found for id" do
+    test 'returns 404 when no institution found for id' do
 
       get :show, params: { :id => 12345 }
 
@@ -40,7 +40,7 @@ module Admin
 
     end
 
-    test "returns institution for valid id" do
+    test 'returns institution for valid id' do
 
       get :show, params: { :id => Institution.last.id }
 
@@ -53,13 +53,13 @@ module Admin
     def valid_institution
       {
         institution: {
-            name: "Lune Valley Enterprise University",
-            description: "Worst university in the north west.",
-            identifier: "luve-u2",
-            contact_name: "John Smith",
-            contact_email: "john@example.com",
-            contact_phone_number: "00000 000000",
-            url: "example.com"
+            name: 'Lune Valley Enterprise University',
+            description: 'Worst university in the north west.',
+            identifier: 'luve-u2',
+            contact_name: 'John Smith',
+            contact_email: 'john@example.com',
+            contact_phone_number: '00000 000000',
+            url: 'example.com'
         }
       }
 
