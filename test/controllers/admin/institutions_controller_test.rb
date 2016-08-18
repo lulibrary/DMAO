@@ -10,6 +10,8 @@ module Admin
 
     end
 
+    # creation tests
+
     test 'redirects to institution path on successfully creating an institution' do
 
       post :create, params: @institution_params
@@ -32,6 +34,8 @@ module Admin
 
     end
 
+    # view institution tests
+
     test 'returns 404 when no institution found for id' do
 
       get :show, params: { :id => 12345 }
@@ -47,6 +51,30 @@ module Admin
       assert assigns(:institution)
 
     end
+
+    # editing tests
+
+    test 'redirects to institution path on successfully editing an institution' do
+      institution = institutions(:luve)
+      patch :update, params:{id: institution.id, institution:{url: 'https://blah.com'}}
+      assert_redirected_to admin_institution_path(Institution.last)
+    end
+
+    test 'returns 404 when no institution found for id when editing' do
+
+      patch :update, params:{id: 12345, institution:{url: 'https://blah.com'}}
+
+      assert_response 404
+
+    end
+
+    test 'returns to edit form on failed update' do
+      institution = institutions(:luve)
+      patch :update, params:{id: institution.id, institution:{name: nil}}
+      assert_template 'edit'
+      assert assigns(:institution).errors.any?
+    end
+
 
     private
 
