@@ -25,3 +25,5 @@ config/database.yml
 
 vendor/assets/components
 public/assets/
+.idea/runConfigurations/*
+.idea/*

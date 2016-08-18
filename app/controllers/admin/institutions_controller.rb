@@ -28,6 +28,27 @@ module Admin
 
     end
 
+    def update
+      begin
+        @institution = Institution.find(params[:id])
+        if @institution.update institution_params
+          redirect_to [:admin, @institution]
+        else
+          render 'edit'
+        end
+      rescue ActiveRecord::RecordNotFound
+        head(:not_found)
+      end
+    end
+
+    def edit
+      begin
+        @institution = Institution.find(params[:id])
+      rescue ActiveRecord::RecordNotFound
+        head(:not_found)
+      end
+    end
+
     def index
       @institutions = Institution.all
     end
