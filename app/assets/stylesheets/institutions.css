@@ -1,0 +1,8 @@
+.table-align-center > thead > tr > th,
+.table-align-center > thead > tr > td,
+.table-align-center > tbody > tr > th,
+.table-align-center > tbody > tr > td,
+.table-align-center > tfoot > tr > th,
+.table-align-center > tfoot > tr > td  {
+    vertical-align: middle;
+}
