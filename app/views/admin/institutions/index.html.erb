@@ -31,16 +31,15 @@
               <td><%= institution.contact_phone_number %></td>
               <td>
                 <div class="btn-group">
-                  <button title data-original-title="Show" data-toggle="tooltip" class="btn btn-default" type="button">
-                    <%= link_to(admin_institution_url(institution)) do %>
-                        <i class="fa fa-file-text"></i>
-                    <% end %>
-                  </button>
-                  <button title data-original-title="Edit" data-toggle="tooltip" class="btn btn-default" type="button">
-                    <%= link_to(edit_admin_institution_url(institution)) do %>
-                        <i class="fa fa-edit"></i>
-                    <% end %>
-                  </button>
+                  <%= link_to(admin_institution_path(institution), data: {original_title: "Show", toggle: "tooltip"}, class: "btn btn-default") do %>
+                      <i class="fa fa-file-text"></i>
+                  <% end %>
+                  <%= link_to(edit_admin_institution_path(institution), data: {original_title: "Edit", toggle: "tooltip"}, class: "btn btn-default") do %>
+                      <i class="fa fa-edit"></i>
+                  <% end %>
+                  <%= link_to(admin_institution_path(institution), method: :delete, data:{confirm:"Are you sure you want to delete #{institution.name}.", original_title: "Delete", toggle: "tooltip"}, class: "btn btn-default") do %>
+                      <i class="fa fa-trash"></i>
+                  <% end %>
                 </div>
               </td>
             </tr>

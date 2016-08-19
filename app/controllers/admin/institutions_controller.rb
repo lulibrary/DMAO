@@ -49,6 +49,16 @@ module Admin
       end
     end
 
+    def destroy
+      begin
+        @institution = Institution.find(params[:id])
+        @institution.destroy
+        redirect_to admin_institutions_path
+      rescue ActiveRecord::RecordNotFound
+        head(:not_found)
+      end
+    end
+
     def index
       @institutions = Institution.all
     end

@@ -75,6 +75,28 @@ module Admin
       assert assigns(:institution).errors.any?
     end
 
+    # admin institution delete tests
+
+    test 'redirects to all institutions list on successfully deleting an institution' do
+      institution = institutions(:luve)
+      delete :destroy, params:{id: institution.id}
+      assert_redirected_to admin_institutions_path
+    end
+
+    test 'returns 404 when no institution found for id when deleting' do
+
+      delete :destroy, params:{id: 12345}
+
+      assert_response 404
+
+    end
+
+    test 'removes institution on successful delete' do
+      institution = institutions(:luve)
+      assert_difference 'Institution.count', -1 do
+        delete :destroy, params:{id: institution.id}
+      end
+    end
 
     private
 
