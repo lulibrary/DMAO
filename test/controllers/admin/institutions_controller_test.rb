@@ -96,9 +96,7 @@ module Admin
       assert_difference 'Institution.count', -1 do
         delete :destroy, params:{id: institution.id}
       end
-
     end
-
 
     private
 

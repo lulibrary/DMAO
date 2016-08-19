@@ -41,6 +41,11 @@
                         <i class="fa fa-edit"></i>
                     <% end %>
                   </button>
+                  <button title data-original-title="Delete" data-toggle="tooltip" class="btn btn-default" type="button">
+                    <%= link_to(admin_institution_path(institution), method: :delete, data:{confirm:"Are you sure you want to delete #{institution.name}."}) do %>
+                        <i class="fa fa-trash"></i>
+                    <% end %>
+                  </button>
                 </div>
               </td>
             </tr>
