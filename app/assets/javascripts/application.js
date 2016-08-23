@@ -11,32 +11,7 @@
 // about supported directives.
 //
 //= require jquery
-
-//= require bootstrap-sprockets
-
 //= require jquery_ujs
 //= require turbolinks
-
-//= require fastclick/lib/fastclick
-//= require Chart.js/dist/Chart.min
-//= require bernii/gauge.js/dist/gauge.min
-//= require bootstrap-progressbar/bootstrap-progressbar.min
-//= require iCheck/icheck.min
-//= require skycons/skycons
-//= require Flot/jquery.flot
-//= require Flot/jquery.flot.pie
-//= require Flot/jquery.flot.time
-//= require Flot/jquery.flot.stack
-//= require Flot/jquery.flot.resize
-//= require js/flot/jquery.flot.orderBars
-//= require js/flot/date
-//= require js/flot/jquery.flot.spline
-//= require js/flot/curvedLines
-//= require js/maps/jquery-jvectormap-2.0.3.min
-//= require js/moment/moment.min
-//= require js/datepicker/daterangepicker
-//= require js/custom.min
-
-
 
 //= require_tree .

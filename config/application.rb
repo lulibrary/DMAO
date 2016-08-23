@@ -15,9 +15,5 @@ module DMAO
     # Custom Validators path
     config.autoload_paths += %W["#{config.root}/app/validators/"]
 
-    config.assets.paths << Rails.root.join('vendor', 'assets', 'components', 'gentelella', 'production')
-    config.assets.paths << Rails.root.join('vendor', 'assets', 'components', 'gentelella', 'build')
-    config.assets.paths << Rails.root.join('vendor', 'assets', 'components', 'gentelella', 'vendors')
-
   end
 end
