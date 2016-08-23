@@ -42,6 +42,11 @@ GEM
     airbrussh (1.1.0)
       sshkit (>= 1.6.1, != 1.7.0)
     arel (7.1.1)
+    autoprefixer-rails (6.4.0.2)
+      execjs
+    bootstrap-sass (3.3.7)
+      autoprefixer-rails (>= 5.2.1)
+      sass (>= 3.3.4)
     builder (3.2.2)
     byebug (9.0.5)
     capistrano (3.6.0)
@@ -77,6 +82,10 @@ GEM
     erubis (2.7.0)
     execjs (2.7.0)
     ffi (1.9.14)
+    font-awesome-rails (4.6.3.1)
+      railties (>= 3.2, < 5.1)
+    font-ionicons-rails (2.0.1.5)
+      railties (>= 3.2, < 6.0)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
     i18n (0.7.0)
@@ -196,6 +205,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bootstrap-sass (~> 3.3.7)
   byebug
   capistrano
   capistrano-bundler (~> 1.1.2)
@@ -204,6 +214,8 @@ DEPENDENCIES
   capistrano-rbenv (~> 2.0)
   codeclimate-test-reporter
   coffee-rails (~> 4.2)
+  font-awesome-rails
+  font-ionicons-rails
   jbuilder (~> 2.5)
   jquery-rails
   listen (~> 3.0.5)
