@@ -1,5 +1,5 @@
 module Admin
-  module DmaoUsers
+  module DmaoAdmins
     class PasswordsController < Devise::PasswordsController
       layout 'auth'
     end

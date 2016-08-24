@@ -12,9 +12,9 @@ Rails.application.routes.draw do
                    unlock: 'unlock'
                },
                controllers: {
-                   sessions: 'admin/dmao_users/sessions',
-                   passwords: 'admin/dmao_users/passwords',
-                   unlocks: 'admin/dmao_users/unlocks'
+                   sessions: 'admin/dmao_admins/sessions',
+                   passwords: 'admin/dmao_admins/passwords',
+                   unlocks: 'admin/dmao_admins/unlocks'
                }
   end
 

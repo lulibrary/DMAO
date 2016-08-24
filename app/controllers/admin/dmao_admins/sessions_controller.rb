@@ -1,5 +1,5 @@
 module Admin
-  module DmaoUsers
+  module DmaoAdmins
     class SessionsController < Devise::SessionsController
       layout 'auth'
     end
