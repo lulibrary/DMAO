@@ -1,5 +1,5 @@
 module Admin
-  module DmaoUsers
+  module DmaoAdmins
     class UnlocksController < Devise::UnlocksController
       layout 'auth'
     end
