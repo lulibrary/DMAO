@@ -1,0 +1,22 @@
+<% flash.each do |key, value| %>
+    <div class="alert alert-danger alert-dismissible">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+      <h4><i class="icon fa fa-ban"></i>Authentication error!</h4>
+      <ul>
+        <li>
+          <%= value %>
+        </li>
+      </ul>
+    </div>
+
+
+    <!--<div class="alert alert-<%= key %>">-->
+      <!--<a href="#" data-dismiss="alert" class="close">×</a>-->
+      <!--<ul>-->
+        <!--<li>-->
+          <!--<%= value %>-->
+        <!--</li>-->
+      <!--</ul>-->
+    <!--</div>-->
+    <!---->
+<% end %>
