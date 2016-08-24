@@ -1,0 +1,34 @@
+<div class="login-logo">
+  <%= link_to root_path do %>
+      <b>DMA</b> Online
+  <% end %>
+</div>
+
+<div class="login-box-body">
+  <p class="login-box-msg">Resend unlock instructions</p>
+
+  <%= render 'partials/auth/messages' %>
+
+  <%= form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }) do |f| %>
+      <%= devise_error_messages! %>
+
+      <%= f.hidden_field :reset_password_token %>
+
+      <div class="form-group has-feedback">
+        <%= f.email_field :email, autofocus: true, placeholder: 'Email', class: 'form-control' %>
+        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12">
+          <%= f.submit "Resend unlock instructions", class: 'btn btn-primary btn-block btn-flat' %>
+        </div>
+      </div>
+  <% end %>
+
+  <div class="text-center">
+    <br/>
+    <%= render "dmao_admins/shared/links" %>
+  </div>
+
+</div>
