@@ -1,6 +1,6 @@
 module Admin
   module DmaoUsers
-    class SessionsController < Devise::SessionsController
+    class UnlocksController < Devise::UnlocksController
       layout 'auth'
     end
   end

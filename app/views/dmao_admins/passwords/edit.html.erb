@@ -1,25 +1,40 @@
-<h2>Change your password</h2>
+<div class="login-logo">
+  <%= link_to root_path do %>
+      <b>DMA</b> Online
+  <% end %>
+</div>
 
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
-  <%= devise_error_messages! %>
-  <%= f.hidden_field :reset_password_token %>
+<div class="login-box-body">
+  <p class="login-box-msg">Change your password</p>
 
-  <div class="field">
-    <%= f.label :password, "New password" %><br />
-    <% if @minimum_password_length %>
-      <em>(<%= @minimum_password_length %> characters minimum)</em><br />
-    <% end %>
-    <%= f.password_field :password, autofocus: true, autocomplete: "off" %>
+  <%= render 'partials/auth/messages' %>
+
+  <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+
+      <%= devise_error_messages! %>
+
+      <%= f.hidden_field :reset_password_token %>
+
+      <div class="form-group has-feedback">
+        <%= f.password_field :password, autocomplete: "off", placeholder: 'Password', class: 'form-control' %>
+        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+      </div>
+
+      <div class="form-group has-feedback">
+        <%= f.password_field :password_confirmation, autocomplete: "off", placeholder: 'Confirm new password', class: 'form-control' %>
+        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-4 col-xs-offset-4">
+          <%= f.submit "Change my password", class: 'btn btn-primary btn-block btn-flat' %>
+        </div>
+      </div>
+  <% end %>
+
+  <div class="text-center">
+    <br/>
+    <%= render "dmao_admins/shared/links" %>
   </div>
 
-  <div class="field">
-    <%= f.label :password_confirmation, "Confirm new password" %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Change my password" %>
-  </div>
-<% end %>
-
-<%= render "dmao_admins/shared/links" %>
+</div>
