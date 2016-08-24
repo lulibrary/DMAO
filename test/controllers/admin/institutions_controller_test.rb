@@ -4,8 +4,12 @@ module Admin
 
   class InstitutionsControllerTest < ActionController::TestCase
 
+    include Devise::Test::ControllerHelpers
+
     def setup
 
+      @request.env['devise.mapping'] = Devise.mappings[:dmao_admin]
+      sign_in dmao_admins(:one)
       @institution_params = valid_institution
 
     end
