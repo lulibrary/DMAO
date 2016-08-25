@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  devise_for :institution_admins
+  devise_for :institution_admins, skip: :all
   root to: 'pages#main'
 
   scope :admin do
@@ -20,7 +20,9 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    resources :institutions
+    resources :institutions do
+      resources :admins, controller: 'institution_admins'
+    end
   end
 
 end
