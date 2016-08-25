@@ -4,4 +4,6 @@ class Institution < ApplicationRecord
   validates :name, presence: true
   validates :contact_email, email: true
 
+  has_many :institution_admins, as: :admins
+
 end

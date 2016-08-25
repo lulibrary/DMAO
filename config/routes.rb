@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  devise_for :institution_admins
   root to: 'pages#main'
 
   scope :admin do
