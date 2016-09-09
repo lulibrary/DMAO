@@ -20,7 +20,7 @@ module Admin
 
       post :create, params: @admin_params.merge({institution_id: @institution.id})
 
-      assert_redirected_to admin_institution_admin_path(id: InstitutionAdmin.last)
+      assert_redirected_to admin_institution_admin_path(id: Institution::Admin.last)
 
     end
 

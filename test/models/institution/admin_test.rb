@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class InstitutionAdminTest < ActiveSupport::TestCase
+class Institution::AdminTest < ActiveSupport::TestCase
 
   def setup
     @institution_admin = institution_admins(:one)
