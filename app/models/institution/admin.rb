@@ -7,4 +7,6 @@ class Institution::Admin < ApplicationRecord
   validates :name, presence: true
   validates :institution, presence: true
 
+  default_scope { where(institution_id: Institution.current_id) }
+
 end
