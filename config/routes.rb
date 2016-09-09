@@ -21,7 +21,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :institutions do
-      resources :admins, controller: 'institution_admins'
+      resources :admins, controller: 'institutions/admins'
     end
   end
 
