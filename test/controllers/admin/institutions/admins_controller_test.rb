@@ -125,6 +125,38 @@ module Admin
 
       end
 
+      test 'Delete - return 404 when no institution found for id when deleting admin user' do
+
+        delete :destroy, params: { institution_id: 0, id: 0 }
+
+        assert_response :not_found
+
+      end
+
+      test 'Delete - return 404 when no admin user found in institution for id when deleting admin' do
+
+        delete :destroy, params: { institution_id: @institution.id, id: 0 }
+
+        assert_response :not_found
+
+      end
+
+      test 'Delete - redirects to institution details on successfully deleting an institution admin user' do
+
+        delete :destroy, params: { institution_id: @institution.id, id: @institution.admins.first.id }
+
+        assert_redirected_to admin_institution_path(@institution)
+
+      end
+
+      test 'Delete - removes an institution admin on successful delete' do
+
+        assert_difference 'Institution::Admin.unscoped.count', -1 do
+          delete :destroy, params: { institution_id: @institution.id, id: @institution.admins.first.id }
+        end
+
+      end
+
       private
 
       def valid_admin
