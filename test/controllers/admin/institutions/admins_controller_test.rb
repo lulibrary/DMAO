@@ -81,6 +81,50 @@ module Admin
 
       end
 
+      test 'Update - returns 404 when no institution found for id when updating admin user' do
+
+        patch :update, params: { institution_id: 0, id: 0, institution_admin: { name: 'Updated name' } }
+
+        assert_response :not_found
+
+      end
+
+      test 'Update - returns 404 when no admin user found in institution for id when updating admin user' do
+
+        patch :update, params: { institution_id: @institution.id, id: 0, institution_admin: { name: 'Updated name' } }
+
+        assert_response :not_found
+
+      end
+
+      test 'Update - returns to showing institution admin details on successfully editing admin' do
+
+        patch :update, params: { institution_id: @institution.id, id: @institution.admins.first.id, institution_admin: { name: 'Updated name' } }
+
+        assert_redirected_to admin_institution_admin_path(@institution, @institution.admins.first)
+
+      end
+
+      test 'Update - name for institution admin should be updated and saved' do
+
+        patch :update, params: { institution_id: @institution.id, id: @institution.admins.first.id, institution_admin: { name: 'Updated name' } }
+
+        @institution.reload
+
+        assert_equal 'Updated name', @institution.admins.first.name
+
+      end
+
+      test 'Update - returns to edit form on failed update' do
+
+        patch :update, params: { institution_id: @institution.id, id: @institution.admins.first.id, institution_admin: { name: nil } }
+
+        assert_template :edit
+
+        assert assigns(:institution_admin).errors.any?
+
+      end
+
       private
 
       def valid_admin
