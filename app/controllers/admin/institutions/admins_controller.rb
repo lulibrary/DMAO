@@ -41,6 +41,22 @@ module Admin
 
       end
 
+      def edit
+
+        begin
+
+          institution = Institution.find params[:institution_id]
+
+          @institution_admin = institution.admins.find(params[:id])
+
+        rescue ActiveRecord::RecordNotFound
+
+          head(:not_found)
+
+        end
+
+      end
+
       private
 
       def admin_params

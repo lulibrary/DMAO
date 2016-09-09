@@ -57,6 +57,30 @@ module Admin
 
       end
 
+      test 'Edit - returns 404 when no institution found for id when editing admin user' do
+
+        get :edit, params: { institution_id: 12345, id: 12345 }
+
+        assert_response 404
+
+      end
+
+      test 'Edit - returns 404 when no admin user found in institution for id' do
+
+        get :edit, params: { institution_id: @institution.id, id: 0 }
+
+        assert_response 404
+
+      end
+
+      test 'Edit - returns edit form when institution id and admin id are valid' do
+
+        get :edit, params: { institution_id: @institution.id, id: @institution.admins.first.id }
+
+        assert_template :edit
+
+      end
+
       private
 
       def valid_admin
