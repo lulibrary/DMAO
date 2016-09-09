@@ -57,6 +57,74 @@ module Admin
 
       end
 
+      test 'Edit - returns 404 when no institution found for id when editing admin user' do
+
+        get :edit, params: { institution_id: 12345, id: 12345 }
+
+        assert_response 404
+
+      end
+
+      test 'Edit - returns 404 when no admin user found in institution for id' do
+
+        get :edit, params: { institution_id: @institution.id, id: 0 }
+
+        assert_response 404
+
+      end
+
+      test 'Edit - returns edit form when institution id and admin id are valid' do
+
+        get :edit, params: { institution_id: @institution.id, id: @institution.admins.first.id }
+
+        assert_template :edit
+
+      end
+
+      test 'Update - returns 404 when no institution found for id when updating admin user' do
+
+        patch :update, params: { institution_id: 0, id: 0, institution_admin: { name: 'Updated name' } }
+
+        assert_response :not_found
+
+      end
+
+      test 'Update - returns 404 when no admin user found in institution for id when updating admin user' do
+
+        patch :update, params: { institution_id: @institution.id, id: 0, institution_admin: { name: 'Updated name' } }
+
+        assert_response :not_found
+
+      end
+
+      test 'Update - returns to showing institution admin details on successfully editing admin' do
+
+        patch :update, params: { institution_id: @institution.id, id: @institution.admins.first.id, institution_admin: { name: 'Updated name' } }
+
+        assert_redirected_to admin_institution_admin_path(@institution, @institution.admins.first)
+
+      end
+
+      test 'Update - name for institution admin should be updated and saved' do
+
+        patch :update, params: { institution_id: @institution.id, id: @institution.admins.first.id, institution_admin: { name: 'Updated name' } }
+
+        @institution.reload
+
+        assert_equal 'Updated name', @institution.admins.first.name
+
+      end
+
+      test 'Update - returns to edit form on failed update' do
+
+        patch :update, params: { institution_id: @institution.id, id: @institution.admins.first.id, institution_admin: { name: nil } }
+
+        assert_template :edit
+
+        assert assigns(:institution_admin).errors.any?
+
+      end
+
       private
 
       def valid_admin
