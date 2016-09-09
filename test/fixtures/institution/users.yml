@@ -1,0 +1,3 @@
+one: {email: '1@example.com', name: 'Somebody', institution: luve}
+
+two: {email: '2@example.com', name: 'Somebody Else'}

@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
-  # devise_for :institution_admins, skip: :all, class_name: "Institution::Admin"
+  devise_for :institution_users, skip: :all, class_name: "Institution::User"
+  
   root to: 'pages#main'
 
   scope :admin do
