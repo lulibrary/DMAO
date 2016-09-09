@@ -12,6 +12,10 @@ module Institutions
       @non_existing_institution.identifier = "thisdoesntexist"
     end
 
+    def teardown
+      Rails.application.reload_routes!
+    end
+
     test 'returns 404 if cannot find institution' do
 
       get :test, params: { institution_identifier: @non_existing_institution.identifier }
