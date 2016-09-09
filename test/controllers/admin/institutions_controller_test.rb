@@ -56,6 +56,14 @@ module Admin
 
     end
 
+    test 'returns institution admins for valid id' do
+
+      get :show, params: { :id => Institution.last.id }
+
+      assert assigns(:institution_admins)
+
+    end
+
     # editing tests
 
     test 'redirects to institution path on successfully editing an institution' do

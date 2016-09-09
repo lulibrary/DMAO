@@ -22,6 +22,7 @@ module Admin
 
       begin
         @institution = Institution.find(params[:id])
+        @institution_admins = @institution.admins
       rescue ActiveRecord::RecordNotFound
         head(:not_found)
       end
