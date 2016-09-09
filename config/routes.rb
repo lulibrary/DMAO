@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  devise_for :institution_admins, skip: :all, class_name: "Institution::Admin"
+  # devise_for :institution_admins, skip: :all, class_name: "Institution::Admin"
   root to: 'pages#main'
 
   scope :admin do
@@ -23,6 +23,25 @@ Rails.application.routes.draw do
     resources :institutions do
       resources :admins, controller: 'institutions/admins'
     end
+  end
+
+  scope '/:institution_identifier', module: 'institutions' do
+
+    devise_for :institution_admins,
+               class_name: "Institution::Admin",
+               path: '',
+               path_names: {
+                   sign_in: 'login',
+                   sign_out: 'logout',
+                   password: 'reset_password',
+                   unlock: 'unlock'
+               },
+               controllers: {
+                   sessions: 'institutions/admin/sessions',
+                   passwords: 'institutions/admin/passwords',
+                   unlocks: 'institutions/admin/unlocks'
+               }
+
   end
 
 end
