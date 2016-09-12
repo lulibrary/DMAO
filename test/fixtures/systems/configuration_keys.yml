@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  display_name: MyString
+  systemable: one (Systems::CrisSystem)
+
+two:
+  name: MyString
+  display_name: MyString
+  systemable: two (Systems::CrisSystem)
