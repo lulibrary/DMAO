@@ -1,0 +1,27 @@
+<% if @institution_user.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@institution_user.errors.count, "error") %> prohibited
+        this institution user from being saved:
+      </h2>
+      <ul>
+        <% @institution_user.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+<% end %>
+
+<p>
+  <%= f.label :name %><br>
+  <%= f.text_field :name %>
+</p>
+
+<p>
+  <%= f.label :email %><br>
+  <%= f.text_field :email %>
+</p>
+
+<p>
+  <%= f.submit %>
+</p>
