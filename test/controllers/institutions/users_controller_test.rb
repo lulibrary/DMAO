@@ -11,6 +11,8 @@ module Institutions
       @institution_admin = institution_admins(:one)
       @institution = @institution_admin.institution
 
+      @institution_user = valid_institution_user
+
       @request.env['devise.mapping'] = Devise.mappings[:institution_admin]
 
       sign_in institution_admins(:one), scope: :institution_admin
@@ -40,6 +42,65 @@ module Institutions
       get :new, params: { institution_identifier: @institution.identifier }
 
       assert_template :new
+
+    end
+
+    test 'Create - redirects to institution users path on successfully creating a user' do
+
+      post :create, params: @institution_user.merge({institution_identifier: @institution.identifier})
+
+      assert_redirected_to institution_users_path
+
+    end
+
+    test 'Create - returns to new form with errors when name is blank' do
+
+      params = @institution_user
+      params[:institution_user][:name] = nil
+
+      post :create, params: params.merge({institution_identifier: @institution.identifier})
+
+      errors = assigns(:institution_user).errors
+
+      assert_not_empty errors
+      assert errors.details.keys.include? :name
+      assert_template :new
+
+    end
+
+    test 'Create - returns to new form with errors when email is blank' do
+
+      params = @institution_user
+      params[:institution_user][:email] = nil
+
+      post :create, params: params.merge({institution_identifier: @institution.identifier})
+
+      errors = assigns(:institution_user).errors
+
+      assert_not_empty errors
+      assert errors.details.keys.include? :email
+      assert_template :new
+
+    end
+
+    test 'Create - should generate random password for user when creating them' do
+
+      Institutions::UsersController.any_instance.expects(:generate_password).times(1).returns({password: "password", password_confirmation: "password"})
+
+      post :create, params: @institution_user.merge({institution_identifier: @institution.identifier})
+
+    end
+
+    private
+
+    def valid_institution_user
+
+      {
+          institution_user: {
+              name: 'Sombody',
+              email: 'john@example.com',
+          }
+      }
 
     end
 
