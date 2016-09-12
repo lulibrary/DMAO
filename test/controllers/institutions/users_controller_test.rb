@@ -103,6 +103,60 @@ module Institutions
 
     end
 
+    test 'Edit - returns 404 when no user found in institution for id' do
+
+      get :edit, params: { institution_identifier: @institution.identifier, id: 0 }
+
+      assert_response :not_found
+
+    end
+
+    test 'Edit - returns edit form when user id is valid' do
+
+      get :edit, params: { institution_identifier: @institution.identifier, id: @institution.users.first.id }
+
+      assert assigns(:institution_user)
+
+      assert_template :edit
+
+    end
+
+    test 'Update - returns 404 when no user found in institution for id' do
+
+      patch :update, params: { institution_identifier: @institution.identifier, id: 0, institution_user: { name: 'Updated Name' } }
+
+      assert_response :not_found
+
+    end
+
+    test 'Update - return to showing institution users details on successfully editing user' do
+
+      patch :update, params: { institution_identifier: @institution.identifier, id: @institution.users.first.id, institution_user: { name: 'Updated Name' } }
+
+      assert_redirected_to institution_user_path(id: @institution.users.first)
+
+    end
+
+    test 'Update - name for institution user should updated and saved' do
+
+      patch :update, params: { institution_identifier: @institution.identifier, id: @institution.users.first.id, institution_user: { name: 'Updated Name' } }
+
+      @institution.reload
+
+      assert_equal 'Updated Name', @institution.users.first.name
+
+    end
+
+    test 'Update - return to edit form on failed update' do
+
+      patch :update, params: { institution_identifier: @institution.identifier, id: @institution.users.first.id, institution_user: { name: nil } }
+
+      assert_template :edit
+
+      assert assigns(:institution_user).errors.any?
+
+    end
+
     private
 
     def valid_institution_user

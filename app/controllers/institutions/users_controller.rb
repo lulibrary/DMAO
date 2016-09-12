@@ -26,6 +26,44 @@ module Institutions
 
     end
 
+    def edit
+
+      begin
+
+        @institution_user = Institution::User.find(params[:id])
+
+      rescue ActiveRecord::RecordNotFound
+
+        head(:not_found)
+
+      end
+
+    end
+
+    def update
+
+      begin
+
+        @institution_user = Institution::User.find(params[:id])
+
+      rescue ActiveRecord::RecordNotFound
+
+        return head(:not_found)
+
+      end
+
+      if @institution_user.update institution_user_params
+
+        redirect_to institution_user_path(id: @institution_user)
+
+      else
+
+        render 'edit'
+
+      end
+
+    end
+
     private
 
     def institution_user_params
