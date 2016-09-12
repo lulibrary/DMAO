@@ -133,7 +133,7 @@ module Institutions
 
       patch :update, params: { institution_identifier: @institution.identifier, id: @institution.users.first.id, institution_user: { name: 'Updated Name' } }
 
-      assert_redirected_to institution_user_path(id: @institution.users.first)
+      assert_redirected_to institution_user_path(institution_identifier: @institution.identifier, id: @institution.users.first)
 
     end
 

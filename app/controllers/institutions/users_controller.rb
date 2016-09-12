@@ -68,7 +68,7 @@ module Institutions
 
       if @institution_user.update institution_user_params
 
-        redirect_to institution_user_path(id: @institution_user)
+        redirect_to institution_user_path(institution_identifier: current_institution.identifier, id: @institution_user)
 
       else
 
