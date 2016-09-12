@@ -91,6 +91,18 @@ module Institutions
 
     end
 
+    test 'Index - should return all users for the chosen institution' do
+
+      get :index, params: { institution_identifier: @institution.identifier }
+
+      assert assigns(:institution_users)
+
+      assert_not_empty assigns(:institution_users)
+
+      assert_equal @institution.users.count, assigns(:institution_users).length
+
+    end
+
     private
 
     def valid_institution_user

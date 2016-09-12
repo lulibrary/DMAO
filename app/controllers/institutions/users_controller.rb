@@ -2,6 +2,12 @@ module Institutions
 
   class UsersController < InstitutionsController
 
+    def index
+
+      @institution_users = Institution::User.all
+
+    end
+
     def new
 
       @institution_user = Institution::User.new

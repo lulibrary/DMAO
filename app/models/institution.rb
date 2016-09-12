@@ -7,5 +7,6 @@ class Institution < ApplicationRecord
   validates :contact_email, email: true
 
   has_many :admins, class_name: 'Institution::Admin'
+  has_many :users, class_name: 'Institution::User'
 
 end
