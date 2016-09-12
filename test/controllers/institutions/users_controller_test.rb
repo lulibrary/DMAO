@@ -181,6 +181,24 @@ module Institutions
 
     end
 
+    test 'Show - return 404 when no user found in institution for id' do
+
+      get :show, params: { institution_identifier: @institution.identifier, id: 0 }
+
+      assert_response :not_found
+
+    end
+
+    test 'Show - returns show details view when user found in institution for id' do
+
+      get :show, params: { institution_identifier: @institution.identifier, id: @institution.users.first.id }
+
+      assert_template :show
+
+      assert assigns(:institution_user)
+
+    end
+
     private
 
     def valid_institution_user

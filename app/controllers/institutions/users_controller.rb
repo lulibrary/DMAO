@@ -8,6 +8,20 @@ module Institutions
 
     end
 
+    def show
+
+      begin
+
+        @institution_user = Institution::User.find(params[:id])
+
+      rescue ActiveRecord::RecordNotFound
+
+        head(:not_found)
+
+      end
+
+    end
+
     def new
 
       @institution_user = Institution::User.new
