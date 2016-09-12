@@ -64,6 +64,24 @@ module Institutions
 
     end
 
+    def destroy
+
+      begin
+
+        @institution_user = Institution::User.find(params[:id])
+
+        @institution_user.destroy
+
+        redirect_to institution_users_path
+
+      rescue ActiveRecord::RecordNotFound
+
+        head(:not_found)
+
+      end
+
+    end
+
     private
 
     def institution_user_params

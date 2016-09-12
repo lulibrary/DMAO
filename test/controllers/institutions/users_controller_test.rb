@@ -157,6 +157,30 @@ module Institutions
 
     end
 
+    test 'Delete - return 404 when no user found in institution for id' do
+
+      delete :destroy, params: { institution_identifier: @institution.identifier, id: 0 }
+
+      assert_response :not_found
+
+    end
+
+    test 'Delete - redirects to institution users list on successfully deleting user' do
+
+      delete :destroy, params: { institution_identifier: @institution.identifier, id: @institution.users.first.id }
+
+      assert_redirected_to institution_users_path
+
+    end
+
+    test 'Delete - removes an institution user on successful delete' do
+
+      assert_difference 'Institution::User.unscoped.count', -1 do
+        delete :destroy, params: { institution_identifier: @institution.identifier, id: @institution.users.first.id }
+      end
+
+    end
+
     private
 
     def valid_institution_user
