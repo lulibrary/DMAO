@@ -69,7 +69,7 @@ module Admin
     test 'redirects to institution path on successfully editing an institution' do
       institution = institutions(:luve)
       patch :update, params:{id: institution.id, institution:{url: 'https://blah.com'}}
-      assert_redirected_to admin_institution_path(Institution.last)
+      assert_redirected_to admin_institution_path(institution.id)
     end
 
     test 'returns 404 when no institution found for id when editing' do
