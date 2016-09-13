@@ -1,0 +1,8 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  systems_configuration: { cris_system: { id: 1 } }
+  institution: luve
+
+two:
+  systems_configuration: {}
