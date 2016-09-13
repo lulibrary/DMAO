@@ -16,7 +16,7 @@ module Admin
 
       end
 
-      test 'assigns configuration to that of the institution when it exists' do
+      test 'New - assigns configuration to that of the institution when it exists' do
 
         get :new, params: { institution_id: @institution.id }
 
@@ -24,7 +24,7 @@ module Admin
 
       end
 
-      test 'assigns empty configuration if one does not exist for institution' do
+      test 'New - assigns empty configuration if one does not exist for institution' do
 
         test_institution = institutions(:test)
 
@@ -35,6 +35,14 @@ module Admin
         assert_instance_of Institution::Configuration, configuration
         assert_equal test_institution.id, configuration.institution_id
         assert_nil configuration.systems_configuration
+
+      end
+
+      test 'New - returns 404 if institution does not exist' do
+
+        get :new, params: { institution_id: 0 }
+
+        assert_response :not_found
 
       end
 
