@@ -141,6 +141,24 @@ module Admin
 
       end
 
+      test 'Index - should return cris systems with all cris systems' do
+
+        get :index
+
+        assert assigns(:cris_systems)
+
+        assert_equal ::Systems::CrisSystem.count, assigns(:cris_systems).count
+
+      end
+
+      test 'Index - should load index view' do
+
+        get :index
+
+        assert_template :index
+
+      end
+
     end
   end
 end

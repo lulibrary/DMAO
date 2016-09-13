@@ -4,6 +4,8 @@ module Admin
 
       def index
 
+        @cris_systems = ::Systems::CrisSystem.all
+
       end
 
       def show
