@@ -1,0 +1,36 @@
+<%= form_for [:admin, @cris_system] do |f| %>
+
+    <% if @cris_system.errors.any? %>
+        <div id="error_explanation">
+          <h2>
+            <%= pluralize(@cris_system.errors.count, "error") %> prohibited
+            this CRIS system from being saved:
+          </h2>
+          <ul>
+            <% @cris_system.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <p>
+      <%= f.label :name %><br>
+      <%= f.text_field :name %>
+    </p>
+
+    <p>
+      <%= f.label :description %><br>
+      <%= f.text_area :description %>
+    </p>
+
+    <p>
+      <%= f.label :version %><br>
+      <%= f.text_field :version %>
+    </p>
+
+    <p>
+      <%= f.submit %>
+    </p>
+
+<% end %>
