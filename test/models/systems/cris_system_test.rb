@@ -30,4 +30,20 @@ class Systems::CrisSystemTest < ActiveSupport::TestCase
     refute @cris_system.valid?
   end
 
+  test 'Should set systemable type to "Systems::CrisSystem" when adding configuration key' do
+
+    config_key = @cris_system.configuration_keys.new
+
+    assert "Systems::CrisSystem", config_key.systemable_type
+
+  end
+
+  test 'Should set systemable id to that of cris system when adding configuration key' do
+
+    config_key = @cris_system.configuration_keys.new
+
+    assert @cris_system.id, config_key.systemable_id
+
+  end
+
 end

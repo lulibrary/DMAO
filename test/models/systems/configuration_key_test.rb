@@ -37,6 +37,9 @@ class Systems::ConfigurationKeyTest < ActiveSupport::TestCase
     @configuration_key.name = "testing-name"
     assert @configuration_key.valid?
 
+    @configuration_key.name = "testing1234"
+    assert @configuration_key.valid?
+
   end
 
   test 'configuration key name should be unique on system' do
