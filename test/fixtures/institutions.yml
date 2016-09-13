@@ -9,3 +9,13 @@ luve:
   locale: en-GB
   url: www.example.com
   description: Worst university in the north west.
+
+test:
+  name: Testing University
+  identifier: test
+  contact_name: John Smith
+  contact_email: john@example.com
+  contact_phone_number: 00000-000000
+  locale: en-GB
+  url: www.example.com
+  description: Worst university in the north west.
