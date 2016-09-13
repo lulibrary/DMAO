@@ -25,6 +25,9 @@ Rails.application.routes.draw do
     resources :institutions do
       resources :admins, controller: 'institutions/admins'
     end
+    namespace :systems do
+      resources :cris_systems, controller: 'cris_systems'
+    end
   end
 
   scope '/:institution_identifier', module: 'institutions' do

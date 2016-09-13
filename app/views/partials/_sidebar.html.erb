@@ -18,6 +18,17 @@
         </ul>
       </li>
 
+      <li class="treeview <%= 'active' if !params[:controller].match(/^admin\/systems.*/).nil? %>">
+        <a href="#"><i class="fa fa-home"></i> <span>Systems</span>
+          <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+          <li class="<%= 'active' if ((params[:controller] == 'admin/systems/cris_systems')) %>"><%= link_to "CRIS Systems", admin_systems_cris_systems_path %></li>
+        </ul>
+      </li>
+
     </ul>
     <!-- /.sidebar-menu -->
   </section>
