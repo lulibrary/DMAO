@@ -6,6 +6,20 @@ module Admin
 
       end
 
+      def show
+
+        begin
+
+          @cris_system = ::Systems::CrisSystem.find(params[:id])
+
+        rescue ActiveRecord::RecordNotFound
+
+          head(:not_found)
+
+        end
+
+      end
+
       def new
 
         @cris_system = ::Systems::CrisSystem.new

@@ -11,6 +11,8 @@ module Admin
         @request.env['devise.mapping'] = Devise.mappings[:dmao_admin]
         sign_in dmao_admins(:one)
 
+        @cris_system = systems_cris_systems(:one)
+
       end
 
       test 'New - Returns new cris system form' do
@@ -104,6 +106,38 @@ module Admin
           }
 
         end
+
+      end
+
+      test 'Show - should assign cris system' do
+
+        get :show, params: { id: @cris_system.id }
+
+        assert assigns(:cris_system)
+
+      end
+
+      test 'Show - should return cris system with all its configuration keys' do
+
+        get :show, params: { id: @cris_system.id }
+
+        assert_equal @cris_system.configuration_keys.count, assigns(:cris_system).configuration_keys.count
+
+      end
+
+      test 'Show - should return cris system details view' do
+
+        get :show, params: { id: @cris_system.id }
+
+        assert_template :show
+
+      end
+
+      test 'Show - should return 404 if cannot find cris system with id' do
+
+        get :show, params: { id: 0 }
+
+        assert_response :not_found
 
       end
 
