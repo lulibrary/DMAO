@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :institutions do
       resources :admins, controller: 'institutions/admins'
+      resources :configurations, controller: 'institutions/configurations'
     end
     namespace :systems do
       resources :cris_systems, controller: 'cris_systems'
