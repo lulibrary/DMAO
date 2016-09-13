@@ -28,7 +28,7 @@ module Admin
 
       def cris_system_params
 
-        params.require(:cris_system).permit(:name, :description, :version)
+        params.require(:systems_cris_system).permit(:name, :description, :version, configuration_keys_attributes: [:name, :display_name])
 
       end
 

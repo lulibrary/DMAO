@@ -121,6 +121,10 @@ GEM
     mocha (1.1.0)
       metaclass (~> 0.0.1)
     multi_json (1.12.1)
+    nested_form_fields (0.7.8)
+      coffee-rails (>= 3.2.1)
+      jquery-rails
+      rails (>= 3.2.0)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (3.2.0)
@@ -236,6 +240,7 @@ DEPENDENCIES
   jquery-rails
   listen (~> 3.0.5)
   mocha
+  nested_form_fields
   pg
   puma (~> 3.0)
   rails (~> 5.0.0)
