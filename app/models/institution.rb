@@ -8,5 +8,6 @@ class Institution < ApplicationRecord
 
   has_many :admins, class_name: 'Institution::Admin'
   has_many :users, class_name: 'Institution::User'
+  has_one :configuration, :class_name => 'Institution::Configuration'
 
 end
