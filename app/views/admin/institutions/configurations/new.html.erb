@@ -1,0 +1,28 @@
+<% content_for :title, 'New Institution Configuration' %>
+
+<%= form_for @configuration, url: admin_institution_configurations_path(@institution) do |f| %>
+
+    <div id="systems-configuration">
+
+      <%= f.fields_for :systems_configuration do |system_config| %>
+
+      <div id="cris-system-configuration">
+
+        <%= system_config.fields_for :cris_system do |cris_config| %>
+
+          <p>
+            <%= f.label :system_id, 'CRIS System' %><br>
+            <%= cris_config.collection_select :system_id, Systems::CrisSystem.all, :id, :name, include_blank: 'Choose CRIS System' %>
+          </p>
+
+        <% end %>
+
+      </div>
+
+      <% end %>
+
+    </div>
+
+    <p><%= f.submit %></p>
+
+<% end %>
