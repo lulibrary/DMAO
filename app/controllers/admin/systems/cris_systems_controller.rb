@@ -40,6 +40,26 @@ module Admin
 
       end
 
+      def config_keys
+
+        begin
+
+          cris_system = ::Systems::CrisSystem.find(params[:id])
+
+          @config_keys = cris_system.configuration_keys
+
+          respond_to do |format|
+            format.json { render json: @config_keys }
+          end
+
+        rescue ActiveRecord::RecordNotFound, ActionController::UnknownFormat
+
+          head(:not_found)
+
+        end
+
+      end
+
       private
 
       def cris_system_params

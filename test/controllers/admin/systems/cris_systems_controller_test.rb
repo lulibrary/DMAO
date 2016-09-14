@@ -159,6 +159,32 @@ module Admin
 
       end
 
+      test 'Config Keys - should 404 if cannot find cris system for id' do
+
+        get :config_keys, params: { id: 0 }
+
+        assert_response :not_found
+
+      end
+
+      test 'Config Keys - should return 404 not found when requesting as html' do
+
+        get :config_keys, params: { id: @cris_system.id }
+
+        assert_response :not_found
+
+      end
+
+      test 'Config Keys - should return json when requesting as json' do
+
+        @request.env['HTTP_ACCEPT'] = 'application/json'
+
+        get :config_keys, params: { id: @cris_system.id }
+
+        assert_response :ok
+
+      end
+
     end
   end
 end
