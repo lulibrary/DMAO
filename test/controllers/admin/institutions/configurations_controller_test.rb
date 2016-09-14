@@ -34,7 +34,7 @@ module Admin
 
         assert_instance_of Institution::Configuration, configuration
         assert_equal test_institution.id, configuration.institution_id
-        assert_nil configuration.systems_configuration
+        assert_instance_of Configuration::SystemConfiguration, configuration.systems_configuration
 
       end
 
