@@ -11,10 +11,17 @@ module Configuration
       validate :config_values_array
 
       def initialize(attributes={})
+
+        attributes = attributes.dup unless attributes.nil?
+
+        attributes.delete(:configuration_key_values) unless attributes.nil?
+
         super
+
         if @config_values.nil? || @config_values.empty? || !@config_values.is_a?(Array)
           @config_values = []
         end
+
       end
 
       def add_config_value id
