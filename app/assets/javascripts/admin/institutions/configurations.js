@@ -18,7 +18,7 @@ $(document).on("change", "select#institution_configuration_systems_configuration
                     $("#cris-system-configuration-values").append(configKeyInput(value.id, value.name, value.display_name));
                 });
             },
-            error: function(data){
+            error: function(data) {
 
             }
         });
@@ -30,7 +30,7 @@ $(document).on("change", "select#institution_configuration_systems_configuration
         var input = "<p>";
         input += "<label for='institution_configuration_cris_system_" + name + "'>" + displayName + "</label>";
         input += "<br>";
-        input += "<input type='text' name='institution_configuration[systems_configuration][cris_system][configuration_key_values][" + id + "]" + "'>";
+        input += "<input type='text' name='institution_configuration[systems_configuration][cris_system][configuration_key_values][" + id + "][value]'>";
         input += "</p>" ;
 
         return input;
