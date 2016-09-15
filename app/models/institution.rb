@@ -9,5 +9,6 @@ class Institution < ApplicationRecord
   has_many :admins, class_name: 'Institution::Admin'
   has_many :users, class_name: 'Institution::User'
   has_one :configuration, :class_name => 'Institution::Configuration'
+  has_many :configuration_values, :class_name => 'Systems::ConfigurationValue', dependent: :destroy
 
 end
