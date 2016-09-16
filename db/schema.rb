@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160913141024) do
+ActiveRecord::Schema.define(version: 20160915134500) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -115,6 +115,16 @@ ActiveRecord::Schema.define(version: 20160913141024) do
     t.index ["systemable_type", "systemable_id"], name: "index_systems_configuration_keys_on_systemable", using: :btree
   end
 
+  create_table "systems_configuration_values", force: :cascade do |t|
+    t.string   "encrypted_value"
+    t.integer  "institution_id"
+    t.integer  "systems_configuration_key_id"
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.index ["institution_id"], name: "index_systems_configuration_values_on_institution_id", using: :btree
+    t.index ["systems_configuration_key_id"], name: "index_configuration_values_on_configuration_key_id", using: :btree
+  end
+
   create_table "systems_cris_systems", force: :cascade do |t|
     t.string   "name"
     t.text     "description"
@@ -133,4 +143,6 @@ ActiveRecord::Schema.define(version: 20160913141024) do
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
   end
 
+  add_foreign_key "systems_configuration_values", "institutions"
+  add_foreign_key "systems_configuration_values", "systems_configuration_keys"
 end

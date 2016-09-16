@@ -15,7 +15,7 @@ class Institution::Configuration < ApplicationRecord
       systems_config = ::Configuration::SystemConfiguration.new value
     end
 
-    super(systems_config.to_json)
+    super(systems_config.to_json(except: ["errors", :errors]))
 
   end
 
