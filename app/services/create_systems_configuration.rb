@@ -12,11 +12,26 @@ class CreateSystemsConfiguration
 
     systems_configuration = ::Configuration::SystemConfiguration.new @configuration_hash
 
+    if !systems_configuration.cris_system.valid?
+      systems_configuration.errors.add(:cris_system, systems_configuration.cris_system.errors)
+      return systems_configuration
+    end
+
     config_key_values = @configuration_hash[:cris_system][:configuration_key_values]
 
-    # get cris system - should be wrapped in rescue block in case not found
+    # get cris system
 
-    cris_system = ::Systems::CrisSystem.find(systems_configuration.cris_system.system_id)
+    begin
+
+      cris_system = ::Systems::CrisSystem.find(systems_configuration.cris_system.system_id)
+
+    rescue ActiveRecord::RecordNotFound
+
+      systems_configuration.errors.add(:cris_system, "Invalid system id")
+
+      return systems_configuration
+
+    end
 
     config_key_ids = cris_system.configuration_keys.ids
 
@@ -46,7 +61,9 @@ class CreateSystemsConfiguration
 
       key = ::Systems::ConfigurationKey.find(k.to_i)
 
-      config_value = ::Systems::ConfigurationValue.create(institution: @institution, configuration_key: key, value: v["value"])
+      v = v.symbolize_keys
+
+      config_value = ::Systems::ConfigurationValue.create(institution: @institution, configuration_key: key, value: v[:value])
 
       # set cris system configuration key
 
