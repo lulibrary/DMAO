@@ -7,7 +7,6 @@ module Configuration
       attr_accessor :system_id, :config_values
 
       validates :system_id, numericality: true
-      validates :config_values, presence: true
       validate :config_values_array
 
       def initialize(attributes={})

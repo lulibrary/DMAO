@@ -19,11 +19,6 @@ module Configuration
         refute @cris_system.valid?
       end
 
-      test 'Should be invalid without config values' do
-        @cris_system.config_values = nil
-        refute @cris_system.valid?
-      end
-
       test 'Should be invalid if config values is not an array' do
         @cris_system.config_values = "STRING"
         refute @cris_system.valid?
