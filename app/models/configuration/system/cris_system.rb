@@ -13,6 +13,18 @@ module Configuration
 
         attributes = attributes.dup unless attributes.nil?
 
+        if attributes.present?
+
+          attributes.each do |k,v|
+
+            if v.nil?
+              attributes.delete(k)
+            end
+
+          end
+
+        end
+
         attributes.delete(:configuration_key_values) unless attributes.nil?
 
         super
