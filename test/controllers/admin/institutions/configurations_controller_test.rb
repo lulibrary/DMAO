@@ -100,6 +100,16 @@ module Admin
 
       end
 
+      test 'Create - should show form if error creating systems configuration' do
+
+        ::Configuration::SystemConfiguration.any_instance.expects(:errors).at_least_once.returns(fake_errors_object)
+
+        post :create, params: valid_configuration_params
+
+        assert_template :new
+
+      end
+
       private
 
       def valid_configuration_params
@@ -123,6 +133,16 @@ module Admin
                 }
             }
         }
+      end
+
+      def fake_errors_object
+
+        errors = ActiveModel::Errors.new(self)
+
+        errors.add(:testing, "TESTING ERROR")
+
+        errors
+
       end
 
     end
