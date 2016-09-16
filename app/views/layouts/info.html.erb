@@ -50,6 +50,12 @@
         <li>
           <%= link_to "DMAO Admin", new_dmao_admin_session_path %>
         </li>
+        <li>
+          <a href="#" data-toggle="modal" data-target="#institutionLogin">Institution Admin</a>
+        </li>
+        <li>
+          <a href="http://lib-dmao.lancs.ac.uk:8070/dmaonline/dashboard/#/">Dashboard</a>
+        </li>
       </ul>
     </div>
     <!-- /.navbar-collapse -->
@@ -111,6 +117,8 @@
     <p>Copyright &copy; Lancaster University Library 2016</p>
   </div>
 </footer>
+
+  <%= render "pages/institution_login_modal" %>
 
   <!--<%= yield %>-->
 

@@ -1,0 +1,30 @@
+<div class="modal fade" id="institutionLogin" tabindex="-1" role="dialog" aria-labelledby="institutionLoginTitle">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title text-center" id="institutionLoginTitle">Institution Admin Login</h4>
+      </div>
+
+      <%= form_for @institution, url: institution_login_selection_path, html: { class: "form-horizontal" } do |f| %>
+
+      <div class="modal-body">
+
+        <div class="form-group">
+          <%= f.label :id, 'Institution', class: "col-sm-2 control-label" %>
+          <div class="col-sm-10">
+            <%= f.collection_select :id, @institutions, :id, :name, { include_blank: '=== Choose your institution ==='}, class: "form-control" %>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <%= f.submit "Login", class: "btn btn-default center-block" %>
+      </div>
+
+      <% end %>
+
+    </div>
+  </div>
+</div>

@@ -5,6 +5,9 @@ Rails.application.routes.draw do
 
   root to: 'pages#home'
 
+
+  post '/institution-login', to: 'pages#institution_login', as: :institution_login_selection
+
   scope :admin do
     devise_for :dmao_admins,
                path: '',
