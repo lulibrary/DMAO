@@ -37,7 +37,7 @@ class CreateSystemsConfiguration
 
     # check configurations key values are set for all config keys else errors
 
-    config_key_values.each do |k,v|
+    config_key_values.keys.each do |k|
 
       if config_key_ids.include?(k.to_i)
 
