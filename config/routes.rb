@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   devise_for :institution_users, skip: :all, class_name: "Institution::User"
   devise_for :institution_admins, skip: :all, class_name: "Institution::Admin"
 
-  root to: 'pages#main'
+  root to: 'pages#home'
 
   scope :admin do
     devise_for :dmao_admins,
