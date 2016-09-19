@@ -36,8 +36,6 @@ module ConfigurationKeyHelper
 
     begin
 
-      key = Systems::ConfigurationKey.find(id)
-
       false
 
     rescue ActiveRecord::RecordNotFound
