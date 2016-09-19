@@ -42,7 +42,7 @@ module ConfigurationKeyHelper
 
     rescue ActiveRecord::RecordNotFound
 
-      false
+      nil
 
     end
 
