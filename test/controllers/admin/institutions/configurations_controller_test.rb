@@ -12,15 +12,17 @@ module Admin
         @request.env['devise.mapping'] = Devise.mappings[:dmao_admin]
         sign_in dmao_admins(:one)
 
-        @institution = institutions(:luve)
+        @institution = institutions(:test)
 
       end
 
       test 'New - assigns configuration to that of the institution when it exists' do
 
-        get :new, params: { institution_id: @institution.id }
+        institution = institutions(:luve)
 
-        assert_equal @institution.configuration, assigns(:configuration)
+        get :new, params: { institution_id: institution.id }
+
+        assert_equal institution.configuration, assigns(:configuration)
 
       end
 
@@ -78,7 +80,7 @@ module Admin
 
         post :create, params: valid_configuration_params
 
-        assert_template :new
+        assert_template "new-errors"
 
       end
 
@@ -106,7 +108,7 @@ module Admin
 
         post :create, params: valid_configuration_params
 
-        assert_template :new
+        assert_template "new-errors"
 
       end
 
