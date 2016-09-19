@@ -8,4 +8,12 @@ class Systems::ConfigurationKey < ApplicationRecord
 
   belongs_to :systemable, polymorphic: true
 
+  after_initialize :set_secure_default
+
+  def set_secure_default
+
+    self.secure ||= false
+
+  end
+
 end
