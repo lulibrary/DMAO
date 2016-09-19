@@ -59,4 +59,28 @@ class Systems::ConfigurationKeyTest < ActiveSupport::TestCase
 
   end
 
+  test 'set secure default should return false when secure is nil' do
+
+    @configuration_key.secure = nil
+
+    assert_not @configuration_key.set_secure_default
+
+  end
+
+  test 'set secure default should return true when secure is true' do
+
+    @configuration_key.secure = true
+
+    assert @configuration_key.set_secure_default
+
+  end
+
+  test 'set secure default should return false when secure is false' do
+
+    @configuration_key.secure = false
+
+    assert_not @configuration_key.set_secure_default
+
+  end
+
 end
