@@ -36,7 +36,9 @@ module ConfigurationKeyHelper
 
     begin
 
-      false
+      key = Systems::ConfigurationKey.find(id)
+
+      key.secure
 
     rescue ActiveRecord::RecordNotFound
 
