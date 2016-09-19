@@ -24,11 +24,10 @@ class ConfigurationKeyHelperTest < ActionView::TestCase
 
   end
 
-  test 'should return nil for invalid configuration key id when requesting secure' do
+  test 'should return false for all configuration key secure calls' do
 
-    @configuration_key.id = 0
-
-    assert_nil configuration_key_id_secure @configuration_key.id
+    assert_not configuration_key_id_secure 0
+    assert_not configuration_key_id_secure @configuration_key.id
 
   end
 
