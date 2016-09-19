@@ -34,7 +34,7 @@ module Admin
 
         systems_configuration = ::CreateSystemsConfiguration.new(@institution, configuration_params[:systems_configuration].to_h).call
 
-        @configuration = ::Institution::Configuration.new(institution_id: @institution.id)
+        @configuration = @institution.configuration || Institution::Configuration.new(institution: @institution)
 
         if systems_configuration.errors.any?
 
@@ -52,7 +52,9 @@ module Admin
 
         end
 
-        render 'new'
+        @configuration_params = configuration_params
+
+        render 'new-errors'
 
       end
 
