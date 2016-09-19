@@ -43,6 +43,11 @@
           <%= config_keys.text_field :display_name %>
         </p>
 
+        <p>
+          <%= config_keys.label :secure %><br>
+          <%= config_keys.check_box :secure %>
+        </p>
+
     <% end %>
 
     <%= f.add_nested_fields_link :configuration_keys, 'Add another config key' %>

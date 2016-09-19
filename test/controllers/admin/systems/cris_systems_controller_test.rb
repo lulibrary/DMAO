@@ -109,6 +109,27 @@ module Admin
 
       end
 
+      test 'Create - should add configuration key with secure set to true when secure specified' do
+
+        post :create, params: {
+            systems_cris_system: {
+                name: 'Testing System',
+                description: 'Testing CRIS Systems',
+                version: 1,
+                configuration_keys_attributes: {
+                    "0": {
+                        name: 'testing-key-name',
+                        display_name: 'Testing key name',
+                        secure: true
+                    }
+                }
+            }
+        }
+
+        assert ::Systems::CrisSystem.last.configuration_keys.first.secure
+
+      end
+
       test 'Show - should assign cris system' do
 
         get :show, params: { id: @cris_system.id }
