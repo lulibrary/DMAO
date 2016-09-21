@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  description: MyText
+  url: MyString
+  system_uuid: MyString
+  system_modified_at: 2016-09-21 13:42:37
+  isni: MyString
+  unit_type: Faculty
+  parent:
+  institution: luve
+
+two:
+  name: MyString
+  description: MyText
+  url: MyString
+  system_uuid: MyString2
+  system_modified_at: 2016-09-21 13:42:37
+  isni: MyString
+  unit_type: Department
+  parent: one
+  institution: luve
