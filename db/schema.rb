@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160921123849) do
+ActiveRecord::Schema.define(version: 20160921124233) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,6 +66,22 @@ ActiveRecord::Schema.define(version: 20160921123849) do
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
     t.index ["institution_id"], name: "index_institution_configurations_on_institution_id", using: :btree
+  end
+
+  create_table "institution_organisation_units", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+    t.string   "name"
+    t.text     "description"
+    t.string   "url"
+    t.string   "system_uuid"
+    t.datetime "system_modified_at"
+    t.string   "isni"
+    t.string   "unit_type"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.integer  "institution_id"
+    t.uuid     "parent_id"
+    t.index ["institution_id"], name: "index_institution_organisation_units_on_institution_id", using: :btree
+    t.index ["parent_id"], name: "index_institution_organisation_units_on_parent_id", using: :btree
   end
 
   create_table "institution_users", force: :cascade do |t|
