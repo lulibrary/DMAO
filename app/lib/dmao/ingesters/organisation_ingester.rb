@@ -21,6 +21,30 @@ module DMAO
 
       end
 
+      def link_child_to_parent child_uuid, parent_uuid
+
+        begin
+          child = Institution::OrganisationUnit.find(child_uuid)
+        rescue ActiveRecord::RecordNotFound
+          raise IngestError.new("Error finding organisation unit with uuid #{child_uuid}. Cannot link from non-existent child.")
+        end
+
+        begin
+          parent = Institution::OrganisationUnit.find(parent_uuid)
+        rescue ActiveRecord::RecordNotFound
+          raise IngestError.new("Error finding organisation unit with uuid #{parent_uuid}. Cannot link child to non-existent parent.")
+        end
+
+        child.parent = parent
+
+        if child.save
+          true
+        else
+          raise IngestError.new("Error linking child organisation unit to parent organisation unit.")
+        end
+
+      end
+
     end
 
   end
