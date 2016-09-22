@@ -61,6 +61,18 @@ module DMAO
 
       end
 
+      def cache_uuid_mapping system_uuid, dmao_uuid
+
+        set_cache_response = @mapping_cache.set(system_uuid, dmao_uuid)
+
+        if set_cache_response == "OK"
+          true
+        else
+          raise IngestError.new("Error caching mapping between system uuid #{system_uuid} and DMAO uuid #{dmao_uuid}")
+        end
+
+      end
+
     end
 
   end

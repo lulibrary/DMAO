@@ -198,4 +198,30 @@ class OrganisationIngesterTest < ActiveSupport::TestCase
 
   end
 
+  test 'should set redis key for system uuid with value of dmao uuid in namespace' do
+
+    Time.expects(:now).once.returns(123456)
+
+    organisation_ingester = DMAO::Ingesters::OrganisationIngester.new
+
+    organisation_ingester.cache_uuid_mapping "system_uuid", "dmao_uuid"
+
+    namespace = "organisation_ingest_#{Institution.current_id}_123456"
+
+    assert_equal "dmao_uuid", $redis.get("#{namespace}:system_uuid")
+
+  end
+
+  test 'should raise ingest error if redis key cannot be set for system uuid in namespace' do
+
+    Redis::Namespace.any_instance.expects(:set).once.returns(false)
+
+    error = assert_raises DMAO::Ingesters::IngestError do
+      @organisation_ingester.cache_uuid_mapping "system_uuid", "dmao_uuid"
+    end
+
+    assert_equal "Error caching mapping between system uuid system_uuid and DMAO uuid dmao_uuid", error.message
+
+  end
+
 end
