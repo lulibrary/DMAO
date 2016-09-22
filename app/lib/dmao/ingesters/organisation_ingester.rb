@@ -73,6 +73,18 @@ module DMAO
 
       end
 
+      def get_system_uuid_mapping system_uuid
+
+        get_cache_response = @mapping_cache.get(system_uuid)
+
+        if get_cache_response.nil?
+          raise IngestError.new("Error retrieving uuid mapping for system uuid #{system_uuid}")
+        end
+
+        get_cache_response
+
+      end
+
     end
 
   end
