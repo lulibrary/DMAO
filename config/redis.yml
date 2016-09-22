@@ -1,0 +1,14 @@
+default: &default
+  host:
+  port:
+  password:
+  db:
+development:
+  <<: *default
+  db:
+test:
+  <<: *default
+  db:
+production:
+  <<: *default
+  db:
