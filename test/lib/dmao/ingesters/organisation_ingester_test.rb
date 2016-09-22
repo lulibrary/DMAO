@@ -224,4 +224,24 @@ class OrganisationIngesterTest < ActiveSupport::TestCase
 
   end
 
+  test 'should raise ingest error if redis key cannot be found for system uuid in namespace' do
+
+    Redis::Namespace.any_instance.expects(:get).once.returns(nil)
+
+    error = assert_raises DMAO::Ingesters::IngestError do
+      @organisation_ingester.get_system_uuid_mapping "system_uuid"
+    end
+
+    assert_equal "Error retrieving uuid mapping for system uuid system_uuid", error.message
+
+  end
+
+  test 'should return value for redis key when is a valid system uuid key in namespace' do
+
+    @organisation_ingester.cache_uuid_mapping "system_uuid", "dmao_uuid"
+
+    assert_equal "dmao_uuid", @organisation_ingester.get_system_uuid_mapping("system_uuid")
+
+  end
+
 end
