@@ -3,6 +3,22 @@ module DMAO
 
     class OrganisationIngester
 
+      def initialize namespace=nil
+
+        if Institution.current_id.nil?
+          raise IngestError.new("Cannot initialise organisation ingester unless institution current id is set")
+        end
+
+        if namespace.nil? || namespace.empty?
+          namespace = "organisation_ingest"
+        end
+
+        namespace += "_#{Institution.current_id}_#{Time.now.to_i}"
+
+        @mapping_cache = Redis::Namespace.new(namespace, redis: $redis)
+
+      end
+
       def ingest options={}
         raise IngestError.new("Calling ingest on generic organisation ingester is not allowed")
       end

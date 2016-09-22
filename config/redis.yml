@@ -1,14 +1,14 @@
 default: &default
-  host:
-  port:
+  host: localhost
+  port: 32768
   password:
-  db:
 development:
   <<: *default
-  db:
+  db: 0
 test:
   <<: *default
-  db:
+  port: 6379
+  db: 1
 production:
   <<: *default
   db:

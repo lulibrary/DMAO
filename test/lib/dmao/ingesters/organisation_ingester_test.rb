@@ -3,6 +3,7 @@ require 'test_helper'
 class OrganisationIngesterTest < ActiveSupport::TestCase
 
   def setup
+    Institution.current_id = institutions(:luve).id
     @organisation_ingester = DMAO::Ingesters::OrganisationIngester.new
   end
 
@@ -158,6 +159,42 @@ class OrganisationIngesterTest < ActiveSupport::TestCase
     end
 
     assert_equal "Error linking child organisation unit to parent organisation unit.", error.message
+
+  end
+
+  test 'should set redis namespace to contain organisation ingest with institution id and timestamp when not specified' do
+
+    nil_namespace = "organisation_ingest_7890_123456"
+
+    Time.expects(:now).once.returns(123456)
+    Institution.expects(:current_id).at_least_once.returns(7890)
+    Redis::Namespace.expects(:new).once.with(nil_namespace, redis: $redis)
+
+    DMAO::Ingesters::OrganisationIngester.new
+
+  end
+
+  test 'should raise ingest error if Institution current id is not set' do
+
+    Institution.expects(:current_id).once.returns(nil)
+
+    error = assert_raises DMAO::Ingesters::IngestError do
+      DMAO::Ingesters::OrganisationIngester.new
+    end
+
+    assert_equal "Cannot initialise organisation ingester unless institution current id is set", error.message
+
+  end
+
+  test 'should set redis namespace to contain specified namespace with institution id and timestamp' do
+
+    namespace = "my_test_namespace_7890_123456"
+
+    Time.expects(:now).once.returns(123456)
+    Institution.expects(:current_id).at_least_once.returns(7890)
+    Redis::Namespace.expects(:new).once.with(namespace, redis: $redis)
+
+    DMAO::Ingesters::OrganisationIngester.new "my_test_namespace"
 
   end
 
