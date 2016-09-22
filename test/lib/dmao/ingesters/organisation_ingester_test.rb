@@ -140,7 +140,7 @@ class OrganisationIngesterTest < ActiveSupport::TestCase
 
     assert @organisation_ingester.link_child_to_parent ou_2.id, ou_1.id
 
-    parent = Institution::OrganisationUnit.find(ou_1.id)
+    parent = Institution::OrganisationUnit.find(ou_2.id).parent
 
     assert_equal parent, ou_1
 
