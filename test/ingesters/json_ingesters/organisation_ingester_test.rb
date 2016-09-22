@@ -81,6 +81,48 @@ module JSONIngesters
 
     end
 
+    test 'should add the organisation units to the database' do
+
+      ingester_options = { file: @valid_test_file_path }
+
+      assert_difference "Institution::OrganisationUnit.count", 3 do
+        @ingester.ingest ingester_options
+      end
+
+    end
+
+    test 'should cache the link between the system uuid and dmao uuid' do
+
+      ingest_options = { file: @valid_test_file_path }
+
+      units = JSON.parse(File.read(@valid_test_file_path))["organisation_units"]
+
+      OrganisationIngester.any_instance.expects(:link_organisation_units)
+
+      DMAO::Ingesters::OrganisationIngester.any_instance.expects(:add_organisation_unit).times(3).returns("123456")
+
+      units.each do |unit|
+        DMAO::Ingesters::OrganisationIngester.any_instance.expects(:cache_uuid_mapping).with(unit["system"]["uuid"], "123456")
+      end
+
+      @ingester.ingest ingest_options
+
+    end
+
+    test 'should link the child organisation units to their parent units' do
+
+      ingest_options = { file: @valid_test_file_path }
+
+      units = JSON.parse(File.read(@valid_test_file_path))["organisation_units"]
+
+      with_parent = units.select { |u| u["parent"]["uuid"].present? }.size
+
+      DMAO::Ingesters::OrganisationIngester.any_instance.expects(:link_child_to_parent).times(with_parent)
+
+      @ingester.ingest ingest_options
+
+    end
+
   end
 
 end
