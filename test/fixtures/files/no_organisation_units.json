@@ -1,0 +1,20 @@
+{
+  "testing": [
+    {
+      "system": {
+        "uuid": "3d456b94-2e54-4585-ac4f-1a4a7d281356",
+        "modified_at": 1474541182
+      },
+      "details": {
+        "name": "Lune Valley University",
+        "description": "",
+        "url": "",
+        "isni": "",
+        "type": "University"
+      },
+      "parent": {
+        "uuid": ""
+      }
+    }
+  ]
+}
