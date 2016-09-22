@@ -7,7 +7,7 @@ development:
   db: 0
 test:
   <<: *default
-  port: 6379
+  port: 32768
   db: 1
 production:
   <<: *default
