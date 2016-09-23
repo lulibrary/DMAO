@@ -4,6 +4,7 @@ class OrganisationIngesterTest < ActiveSupport::TestCase
 
   def setup
     Institution.current_id = institutions(:luve).id
+    @current_institution_id = Institution.current_id
     @organisation_ingester = DMAO::Ingesters::OrganisationIngester.new
   end
 
@@ -166,7 +167,7 @@ class OrganisationIngesterTest < ActiveSupport::TestCase
 
     nil_namespace = "organisation_ingest_7890_123456"
 
-    Time.expects(:now).once.returns(123456)
+    Time.expects(:now).at_least_once.returns(123456)
     Institution.expects(:current_id).at_least_once.returns(7890)
     Redis::Namespace.expects(:new).once.with(nil_namespace, redis: $redis)
 
@@ -190,7 +191,7 @@ class OrganisationIngesterTest < ActiveSupport::TestCase
 
     namespace = "my_test_namespace_7890_123456"
 
-    Time.expects(:now).once.returns(123456)
+    Time.expects(:now).at_least_once.returns(123456)
     Institution.expects(:current_id).at_least_once.returns(7890)
     Redis::Namespace.expects(:new).once.with(namespace, redis: $redis)
 
@@ -200,7 +201,7 @@ class OrganisationIngesterTest < ActiveSupport::TestCase
 
   test 'should set redis key for system uuid with value of dmao uuid in namespace' do
 
-    Time.expects(:now).once.returns(123456)
+    Time.expects(:now).at_least_once.returns(123456)
 
     organisation_ingester = DMAO::Ingesters::OrganisationIngester.new
 
@@ -241,6 +242,22 @@ class OrganisationIngesterTest < ActiveSupport::TestCase
     @organisation_ingester.cache_uuid_mapping "system_uuid", "dmao_uuid"
 
     assert_equal "dmao_uuid", @organisation_ingester.get_system_uuid_mapping("system_uuid")
+
+  end
+
+  test 'should call create logger with organisation ingest namespace when no namepsace passed in' do
+
+    DMAO::Ingesters::OrganisationIngester.any_instance.expects(:create_logger).once.with("organisation_ingest_#{@current_institution_id}")
+
+    DMAO::Ingesters::OrganisationIngester.new
+
+  end
+
+  test 'should call create logger with namespace passed in if specified' do
+
+    DMAO::Ingesters::OrganisationIngester.any_instance.expects(:create_logger).once.with("testing_ingest_#{@current_institution_id}")
+
+    DMAO::Ingesters::OrganisationIngester.new "testing_ingest"
 
   end
 

@@ -3,6 +3,8 @@ module DMAO
 
     class OrganisationIngester
 
+      include DMAO::Logging::LogIngestErrors
+
       def initialize namespace=nil
 
         if Institution.current_id.nil?
@@ -13,9 +15,13 @@ module DMAO
           namespace = "organisation_ingest"
         end
 
-        namespace += "_#{Institution.current_id}_#{Time.now.to_i}"
+        namespace += "_#{Institution.current_id}"
 
-        @mapping_cache = Redis::Namespace.new(namespace, redis: $redis)
+        namespace_with_time = "#{namespace}_#{Time.now.to_i}"
+
+        create_logger namespace
+
+        @mapping_cache = Redis::Namespace.new(namespace_with_time, redis: $redis)
 
       end
 
