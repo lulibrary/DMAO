@@ -3,8 +3,13 @@ require 'test_helper'
 class Institution::OrganisationUnitTest < ActiveSupport::TestCase
 
   def setup
+    Institution.current_id = institutions(:luve).id
     @organisation_unit = institution_organisation_units(:one)
     @organisation_unit_2 = institution_organisation_units(:two)
+  end
+
+  def teardown
+    Institution.current_id = nil
   end
 
   test 'Is a valid institution organisation unit' do
