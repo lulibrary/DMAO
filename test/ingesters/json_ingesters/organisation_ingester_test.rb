@@ -146,7 +146,9 @@ module JSONIngesters
 
       Institution::OrganisationUnit.any_instance.expects(:save).times(3).returns(false)
 
-      @ingester.ingest ingest_options
+      assert_raises DMAO::Ingesters::Errors::IngestWithErrors do
+        @ingester.ingest ingest_options
+      end
 
     end
 
@@ -161,6 +163,30 @@ module JSONIngesters
       OrganisationIngester.any_instance.expects(:link_child_to_parent).never
 
       @ingester.ingest ingest_options
+
+    end
+
+    test 'should raise ingest with errors error when their are logged errors for the ingest' do
+
+      ingest_options = { file: @valid_test_file_path }
+
+      OrganisationIngester.any_instance.expects(:logged_errors).returns true
+      OrganisationIngester.any_instance.expects(:get_log_file_path).returns "/log/file/path"
+
+      error = assert_raises DMAO::Ingesters::Errors::IngestWithErrors do
+        @ingester.ingest ingest_options
+      end
+
+      assert_equal "JSON organisation ingest completed with errors, see ingest log file.", error.message
+      assert_equal "/log/file/path", error.error_log_file
+
+    end
+
+    test 'should return true if no errors ingesting organisation units' do
+
+      ingest_options = { file: @valid_test_file_path }
+
+      assert @ingester.ingest ingest_options
 
     end
 

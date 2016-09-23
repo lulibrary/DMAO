@@ -22,9 +22,15 @@ module JSONIngesters
 
       link_organisation_units organisation_units
 
-      # HERE
-
       close_log_file
+
+      if logged_errors
+
+        raise DMAO::Ingesters::Errors::IngestWithErrors.new "JSON organisation ingest completed with errors, see ingest log file.", get_log_file_path
+
+      end
+
+      true
 
     end
 
