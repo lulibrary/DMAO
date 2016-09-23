@@ -20,7 +20,7 @@ module DMAO
       test 'should define create, close and log errors method' do
 
         assert_respond_to @test_class, :create_logger
-        assert_respond_to @test_class, :log_ingest_errors
+        assert_respond_to @test_class, :log_ingest_error
         assert_respond_to @test_class, :close_log_file
 
       end
@@ -59,7 +59,7 @@ module DMAO
 
         assert_not @test_class.logged_errors
 
-        @test_class.log_ingest_errors "system uuid", "error message"
+        @test_class.log_ingest_error "system uuid", "error message"
 
         assert @test_class.logged_errors
 
@@ -71,7 +71,7 @@ module DMAO
 
         DMAO::Ingesters::IngestLogger.any_instance.expects(:error).once.with("system_uuid - error message - {}")
 
-        @test_class.log_ingest_errors "system_uuid", "error message"
+        @test_class.log_ingest_error "system_uuid", "error message"
 
       end
 
@@ -81,7 +81,7 @@ module DMAO
 
         DMAO::Ingesters::IngestLogger.any_instance.expects(:error).once.with("system_uuid - error message - #{{errors_1: 'testing'}.to_json}")
 
-        @test_class.log_ingest_errors "system_uuid", "error message", { errors_1: "testing" }
+        @test_class.log_ingest_error "system_uuid", "error message", { errors_1: "testing" }
 
       end
 

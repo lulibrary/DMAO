@@ -12,7 +12,7 @@ module DMAO
 
       end
 
-      def log_ingest_errors system_uuid, error_message, errors={}
+      def log_ingest_error system_uuid, error_message, errors={}
 
         @logged_errors = true
 
