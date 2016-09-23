@@ -1,0 +1,9 @@
+default: &default
+  dsn: ''
+  environments: []
+development:
+  <<: *default
+test:
+  <<: *default
+production:
+  <<: *default
