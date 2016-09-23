@@ -35,7 +35,7 @@ class OrganisationIngesterTest < ActiveSupport::TestCase
 
   end
 
-  test 'should raise ingest error when failing to save organisation unit' do
+  test 'should raise ingest save error when failing to save organisation unit' do
 
     attributes = {
         name: "Test organisation unit",
@@ -49,7 +49,7 @@ class OrganisationIngesterTest < ActiveSupport::TestCase
 
     Institution::OrganisationUnit.any_instance.expects(:save).once.returns(false)
 
-    error = assert_raises DMAO::Ingesters::Errors::IngestError do
+    error = assert_raises DMAO::Ingesters::Errors::IngestSaveError do
       @organisation_ingester.add_organisation_unit attributes
     end
 

@@ -32,7 +32,7 @@ module DMAO
         if organisation_unit.save
           organisation_unit.id
         else
-          raise Errors::IngestError.new("Error ingesting organisation unit, failed to save", organisation_unit.errors)
+          raise Errors::IngestSaveError.new("Error ingesting organisation unit, failed to save", organisation_unit.errors)
         end
 
       end
