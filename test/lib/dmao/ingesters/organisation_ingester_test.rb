@@ -108,12 +108,12 @@ class OrganisationIngesterTest < ActiveSupport::TestCase
 
   end
 
-  test 'link - should raise error when child OU cannot be found' do
+  test 'link - should raise link child error when child OU cannot be found' do
 
     ou_1 = institution_organisation_units(:one)
     ou_2 = institution_organisation_units(:two)
 
-    error = assert_raises DMAO::Ingesters::Errors::IngestError do
+    error = assert_raises DMAO::Ingesters::Errors::IngestLinkChildError do
       @organisation_ingester.link_child_to_parent "testing", ou_2.id
     end
 
@@ -121,12 +121,12 @@ class OrganisationIngesterTest < ActiveSupport::TestCase
 
   end
 
-  test 'link - should raise error when parent OU cannot be found' do
+  test 'link - should raise link parent error when parent OU cannot be found' do
 
     ou_1 = institution_organisation_units(:one)
     ou_2 = institution_organisation_units(:two)
 
-    error = assert_raises DMAO::Ingesters::Errors::IngestError do
+    error = assert_raises DMAO::Ingesters::Errors::IngestLinkParentError do
       @organisation_ingester.link_child_to_parent ou_1.id, "testing"
     end
 
@@ -147,14 +147,14 @@ class OrganisationIngesterTest < ActiveSupport::TestCase
 
   end
 
-  test 'should raise ingest error when error saving child/parent relationship' do
+  test 'should raise ingest save error when error saving child/parent relationship' do
 
     ou_1 = institution_organisation_units(:one)
     ou_2 = institution_organisation_units(:two)
 
     Institution::OrganisationUnit.any_instance.expects(:save).once.returns false
 
-    error = assert_raises DMAO::Ingesters::Errors::IngestError do
+    error = assert_raises DMAO::Ingesters::Errors::IngestSaveError do
       @organisation_ingester.link_child_to_parent ou_2.id, ou_1.id
     end
 
@@ -174,11 +174,11 @@ class OrganisationIngesterTest < ActiveSupport::TestCase
 
   end
 
-  test 'should raise ingest error if Institution current id is not set' do
+  test 'should raise ingest without institution error if Institution current id is not set' do
 
     Institution.expects(:current_id).once.returns(nil)
 
-    error = assert_raises DMAO::Ingesters::Errors::IngestError do
+    error = assert_raises DMAO::Ingesters::Errors::IngestWithoutInstitutionError do
       DMAO::Ingesters::OrganisationIngester.new
     end
 
@@ -216,7 +216,7 @@ class OrganisationIngesterTest < ActiveSupport::TestCase
 
     Redis::Namespace.any_instance.expects(:set).once.returns(false)
 
-    error = assert_raises DMAO::Ingesters::Errors::IngestError do
+    error = assert_raises DMAO::Ingesters::Errors::IngestMappingSetError do
       @organisation_ingester.cache_uuid_mapping "system_uuid", "dmao_uuid"
     end
 
@@ -228,7 +228,7 @@ class OrganisationIngesterTest < ActiveSupport::TestCase
 
     Redis::Namespace.any_instance.expects(:get).once.returns(nil)
 
-    error = assert_raises DMAO::Ingesters::Errors::IngestError do
+    error = assert_raises DMAO::Ingesters::Errors::IngestMappingGetError do
       @organisation_ingester.get_system_uuid_mapping "system_uuid"
     end
 

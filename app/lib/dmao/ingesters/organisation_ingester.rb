@@ -6,7 +6,7 @@ module DMAO
       def initialize namespace=nil
 
         if Institution.current_id.nil?
-          raise Errors::IngestError.new("Cannot initialise organisation ingester unless institution current id is set")
+          raise Errors::IngestWithoutInstitutionError.new("Cannot initialise organisation ingester unless institution current id is set")
         end
 
         if namespace.nil? || namespace.empty?
@@ -42,13 +42,13 @@ module DMAO
         begin
           child = Institution::OrganisationUnit.find(child_uuid)
         rescue ActiveRecord::RecordNotFound
-          raise Errors::IngestError.new("Error finding organisation unit with uuid #{child_uuid}. Cannot link from non-existent child.")
+          raise Errors::IngestLinkChildError.new("Error finding organisation unit with uuid #{child_uuid}. Cannot link from non-existent child.")
         end
 
         begin
           parent = Institution::OrganisationUnit.find(parent_uuid)
         rescue ActiveRecord::RecordNotFound
-          raise Errors::IngestError.new("Error finding organisation unit with uuid #{parent_uuid}. Cannot link child to non-existent parent.")
+          raise Errors::IngestLinkParentError.new("Error finding organisation unit with uuid #{parent_uuid}. Cannot link child to non-existent parent.")
         end
 
         child.parent = parent
@@ -56,7 +56,7 @@ module DMAO
         if child.save
           true
         else
-          raise Errors::IngestError.new("Error linking child organisation unit to parent organisation unit.")
+          raise Errors::IngestSaveError.new("Error linking child organisation unit to parent organisation unit.")
         end
 
       end
@@ -68,7 +68,7 @@ module DMAO
         if set_cache_response == "OK"
           true
         else
-          raise Errors::IngestError.new("Error caching mapping between system uuid #{system_uuid} and DMAO uuid #{dmao_uuid}")
+          raise Errors::IngestMappingSetError.new("Error caching mapping between system uuid #{system_uuid} and DMAO uuid #{dmao_uuid}")
         end
 
       end
@@ -78,7 +78,7 @@ module DMAO
         get_cache_response = @mapping_cache.get(system_uuid)
 
         if get_cache_response.nil?
-          raise Errors::IngestError.new("Error retrieving uuid mapping for system uuid #{system_uuid}")
+          raise Errors::IngestMappingGetError.new("Error retrieving uuid mapping for system uuid #{system_uuid}")
         end
 
         get_cache_response
