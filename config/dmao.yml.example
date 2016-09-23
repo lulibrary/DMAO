@@ -1,0 +1,12 @@
+default: &default
+  ingest_log:
+    directory:
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  <<: *default

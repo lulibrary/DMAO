@@ -4,6 +4,7 @@ class OrganisationIngesterTest < ActiveSupport::TestCase
 
   def setup
     Institution.current_id = institutions(:luve).id
+    @current_institution_id = Institution.current_id
     @organisation_ingester = DMAO::Ingesters::OrganisationIngester.new
   end
 
@@ -35,7 +36,7 @@ class OrganisationIngesterTest < ActiveSupport::TestCase
 
   end
 
-  test 'should raise ingest error when failing to save organisation unit' do
+  test 'should raise ingest save error when failing to save organisation unit' do
 
     attributes = {
         name: "Test organisation unit",
@@ -49,7 +50,7 @@ class OrganisationIngesterTest < ActiveSupport::TestCase
 
     Institution::OrganisationUnit.any_instance.expects(:save).once.returns(false)
 
-    error = assert_raises DMAO::Ingesters::IngestError do
+    error = assert_raises DMAO::Ingesters::Errors::IngestSaveError do
       @organisation_ingester.add_organisation_unit attributes
     end
 
@@ -99,7 +100,7 @@ class OrganisationIngesterTest < ActiveSupport::TestCase
 
   test 'should raise ingest error when trying to call ingest on organisation ingester' do
 
-    error = assert_raises DMAO::Ingesters::IngestError do
+    error = assert_raises DMAO::Ingesters::Errors::IngestError do
       @organisation_ingester.ingest
     end
 
@@ -108,12 +109,12 @@ class OrganisationIngesterTest < ActiveSupport::TestCase
 
   end
 
-  test 'link - should raise error when child OU cannot be found' do
+  test 'link - should raise link child error when child OU cannot be found' do
 
     ou_1 = institution_organisation_units(:one)
     ou_2 = institution_organisation_units(:two)
 
-    error = assert_raises DMAO::Ingesters::IngestError do
+    error = assert_raises DMAO::Ingesters::Errors::IngestLinkChildError do
       @organisation_ingester.link_child_to_parent "testing", ou_2.id
     end
 
@@ -121,12 +122,12 @@ class OrganisationIngesterTest < ActiveSupport::TestCase
 
   end
 
-  test 'link - should raise error when parent OU cannot be found' do
+  test 'link - should raise link parent error when parent OU cannot be found' do
 
     ou_1 = institution_organisation_units(:one)
     ou_2 = institution_organisation_units(:two)
 
-    error = assert_raises DMAO::Ingesters::IngestError do
+    error = assert_raises DMAO::Ingesters::Errors::IngestLinkParentError do
       @organisation_ingester.link_child_to_parent ou_1.id, "testing"
     end
 
@@ -147,14 +148,14 @@ class OrganisationIngesterTest < ActiveSupport::TestCase
 
   end
 
-  test 'should raise ingest error when error saving child/parent relationship' do
+  test 'should raise ingest save error when error saving child/parent relationship' do
 
     ou_1 = institution_organisation_units(:one)
     ou_2 = institution_organisation_units(:two)
 
     Institution::OrganisationUnit.any_instance.expects(:save).once.returns false
 
-    error = assert_raises DMAO::Ingesters::IngestError do
+    error = assert_raises DMAO::Ingesters::Errors::IngestSaveError do
       @organisation_ingester.link_child_to_parent ou_2.id, ou_1.id
     end
 
@@ -166,7 +167,7 @@ class OrganisationIngesterTest < ActiveSupport::TestCase
 
     nil_namespace = "organisation_ingest_7890_123456"
 
-    Time.expects(:now).once.returns(123456)
+    Time.expects(:now).at_least_once.returns(123456)
     Institution.expects(:current_id).at_least_once.returns(7890)
     Redis::Namespace.expects(:new).once.with(nil_namespace, redis: $redis)
 
@@ -174,11 +175,11 @@ class OrganisationIngesterTest < ActiveSupport::TestCase
 
   end
 
-  test 'should raise ingest error if Institution current id is not set' do
+  test 'should raise ingest without institution error if Institution current id is not set' do
 
     Institution.expects(:current_id).once.returns(nil)
 
-    error = assert_raises DMAO::Ingesters::IngestError do
+    error = assert_raises DMAO::Ingesters::Errors::IngestWithoutInstitutionError do
       DMAO::Ingesters::OrganisationIngester.new
     end
 
@@ -190,7 +191,7 @@ class OrganisationIngesterTest < ActiveSupport::TestCase
 
     namespace = "my_test_namespace_7890_123456"
 
-    Time.expects(:now).once.returns(123456)
+    Time.expects(:now).at_least_once.returns(123456)
     Institution.expects(:current_id).at_least_once.returns(7890)
     Redis::Namespace.expects(:new).once.with(namespace, redis: $redis)
 
@@ -200,7 +201,7 @@ class OrganisationIngesterTest < ActiveSupport::TestCase
 
   test 'should set redis key for system uuid with value of dmao uuid in namespace' do
 
-    Time.expects(:now).once.returns(123456)
+    Time.expects(:now).at_least_once.returns(123456)
 
     organisation_ingester = DMAO::Ingesters::OrganisationIngester.new
 
@@ -216,7 +217,7 @@ class OrganisationIngesterTest < ActiveSupport::TestCase
 
     Redis::Namespace.any_instance.expects(:set).once.returns(false)
 
-    error = assert_raises DMAO::Ingesters::IngestError do
+    error = assert_raises DMAO::Ingesters::Errors::IngestMappingSetError do
       @organisation_ingester.cache_uuid_mapping "system_uuid", "dmao_uuid"
     end
 
@@ -228,7 +229,7 @@ class OrganisationIngesterTest < ActiveSupport::TestCase
 
     Redis::Namespace.any_instance.expects(:get).once.returns(nil)
 
-    error = assert_raises DMAO::Ingesters::IngestError do
+    error = assert_raises DMAO::Ingesters::Errors::IngestMappingGetError do
       @organisation_ingester.get_system_uuid_mapping "system_uuid"
     end
 
@@ -241,6 +242,22 @@ class OrganisationIngesterTest < ActiveSupport::TestCase
     @organisation_ingester.cache_uuid_mapping "system_uuid", "dmao_uuid"
 
     assert_equal "dmao_uuid", @organisation_ingester.get_system_uuid_mapping("system_uuid")
+
+  end
+
+  test 'should call create logger with organisation ingest namespace when no namepsace passed in' do
+
+    DMAO::Ingesters::OrganisationIngester.any_instance.expects(:create_logger).once.with("organisation_ingest_#{@current_institution_id}")
+
+    DMAO::Ingesters::OrganisationIngester.new
+
+  end
+
+  test 'should call create logger with namespace passed in if specified' do
+
+    DMAO::Ingesters::OrganisationIngester.any_instance.expects(:create_logger).once.with("testing_ingest_#{@current_institution_id}")
+
+    DMAO::Ingesters::OrganisationIngester.new "testing_ingest"
 
   end
 

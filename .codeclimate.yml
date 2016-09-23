@@ -14,6 +14,8 @@ engines:
       - javascript
       - python
       - php
+    exclude_fingerprints:
+    - 88b89a5c35290dce4488a14d6b861e85 # Similar code for child parent finding
   eslint:
     enabled: true
   fixme:
