@@ -89,4 +89,16 @@ class IngestLoggerTest < ActiveSupport::TestCase
 
   end
 
+  test 'when initialising should set log file path to be the path to the logger' do
+
+    Time.expects(:now).at_least_once.returns(12345)
+
+    log_folder = Rails.application.config_for(:dmao)["ingest_log"]["directory"]
+
+    ingester = DMAO::Ingesters::IngestLogger.new
+
+    assert_equal "#{log_folder}/new_ingest_12345.log", ingester.log_file_path
+
+  end
+
 end

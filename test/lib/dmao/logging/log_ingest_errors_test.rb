@@ -87,6 +87,18 @@ module DMAO
 
       end
 
+      test 'logger should call log file path on logger when getting log file path' do
+
+        assert_nil @test_class.get_log_file_path
+
+        @test_class.create_logger "test_log_file"
+
+        DMAO::Ingesters::IngestLogger.any_instance.expects(:log_file_path).once.returns("testing")
+
+        assert_equal "testing", @test_class.get_log_file_path
+
+      end
+
     end
 
   end

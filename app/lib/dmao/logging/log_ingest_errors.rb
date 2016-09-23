@@ -24,6 +24,11 @@ module DMAO
         @logger.close
       end
 
+      def get_log_file_path
+        return nil if @logger.nil?
+        @logger.log_file_path
+      end
+
     end
 
   end

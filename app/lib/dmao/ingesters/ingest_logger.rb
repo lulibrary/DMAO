@@ -3,6 +3,8 @@ module DMAO
 
     class IngestLogger < Logger
 
+      attr_reader :log_file_path
+
       def initialize ingest=nil
 
         if ingest.nil?
@@ -11,7 +13,9 @@ module DMAO
 
         directory = Rails.application.config_for(:dmao)["ingest_log"]["directory"]
 
-        super("#{directory}/#{ingest}_#{Time.now.to_i}.log")
+        @log_file_path = "#{directory}/#{ingest}_#{Time.now.to_i}.log"
+
+        super(log_file_path)
 
         self.formatter = formatter
 
