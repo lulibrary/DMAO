@@ -49,7 +49,7 @@ class OrganisationIngesterTest < ActiveSupport::TestCase
 
     Institution::OrganisationUnit.any_instance.expects(:save).once.returns(false)
 
-    error = assert_raises DMAO::Ingesters::IngestError do
+    error = assert_raises DMAO::Ingesters::Errors::IngestError do
       @organisation_ingester.add_organisation_unit attributes
     end
 
@@ -99,7 +99,7 @@ class OrganisationIngesterTest < ActiveSupport::TestCase
 
   test 'should raise ingest error when trying to call ingest on organisation ingester' do
 
-    error = assert_raises DMAO::Ingesters::IngestError do
+    error = assert_raises DMAO::Ingesters::Errors::IngestError do
       @organisation_ingester.ingest
     end
 
@@ -113,7 +113,7 @@ class OrganisationIngesterTest < ActiveSupport::TestCase
     ou_1 = institution_organisation_units(:one)
     ou_2 = institution_organisation_units(:two)
 
-    error = assert_raises DMAO::Ingesters::IngestError do
+    error = assert_raises DMAO::Ingesters::Errors::IngestError do
       @organisation_ingester.link_child_to_parent "testing", ou_2.id
     end
 
@@ -126,7 +126,7 @@ class OrganisationIngesterTest < ActiveSupport::TestCase
     ou_1 = institution_organisation_units(:one)
     ou_2 = institution_organisation_units(:two)
 
-    error = assert_raises DMAO::Ingesters::IngestError do
+    error = assert_raises DMAO::Ingesters::Errors::IngestError do
       @organisation_ingester.link_child_to_parent ou_1.id, "testing"
     end
 
@@ -154,7 +154,7 @@ class OrganisationIngesterTest < ActiveSupport::TestCase
 
     Institution::OrganisationUnit.any_instance.expects(:save).once.returns false
 
-    error = assert_raises DMAO::Ingesters::IngestError do
+    error = assert_raises DMAO::Ingesters::Errors::IngestError do
       @organisation_ingester.link_child_to_parent ou_2.id, ou_1.id
     end
 
@@ -178,7 +178,7 @@ class OrganisationIngesterTest < ActiveSupport::TestCase
 
     Institution.expects(:current_id).once.returns(nil)
 
-    error = assert_raises DMAO::Ingesters::IngestError do
+    error = assert_raises DMAO::Ingesters::Errors::IngestError do
       DMAO::Ingesters::OrganisationIngester.new
     end
 
@@ -216,7 +216,7 @@ class OrganisationIngesterTest < ActiveSupport::TestCase
 
     Redis::Namespace.any_instance.expects(:set).once.returns(false)
 
-    error = assert_raises DMAO::Ingesters::IngestError do
+    error = assert_raises DMAO::Ingesters::Errors::IngestError do
       @organisation_ingester.cache_uuid_mapping "system_uuid", "dmao_uuid"
     end
 
@@ -228,7 +228,7 @@ class OrganisationIngesterTest < ActiveSupport::TestCase
 
     Redis::Namespace.any_instance.expects(:get).once.returns(nil)
 
-    error = assert_raises DMAO::Ingesters::IngestError do
+    error = assert_raises DMAO::Ingesters::Errors::IngestError do
       @organisation_ingester.get_system_uuid_mapping "system_uuid"
     end
 
