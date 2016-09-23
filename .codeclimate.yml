@@ -22,6 +22,7 @@ engines:
     enabled: true
     exclude_fingerprints:
     - 1800b7dde7bb9294e06a5b85c19c138b
+    - 88b89a5c35290dce4488a14d6b861e85 # Exclude Child Similar to Parent errors
 ratings:
   paths:
   - Gemfile.lock
