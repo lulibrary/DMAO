@@ -123,6 +123,47 @@ module JSONIngesters
 
     end
 
+    test 'if error adding organisation unit error should be written to log file' do
+
+      ingest_options = { file: @valid_test_file_path }
+
+      OrganisationIngester.any_instance.expects(:log_ingest_error).times(3)
+
+      Institution::OrganisationUnit.any_instance.expects(:save).times(3).returns(false)
+
+      @ingester.ingest ingest_options
+
+    end
+
+    test 'if error adding organisation unit system uuid should be adding to link ignore' do
+
+      ingest_options = { file: @valid_test_file_path }
+
+      units = JSON.parse(File.read(@valid_test_file_path))["organisation_units"]
+
+      units.each {|unit| @ingester.ignore_for_linking unit["system"]["uuid"] }
+      units.each {|unit| OrganisationIngester.any_instance.expects(:ignore_for_linking).once.with(unit["system"]["uuid"]) }
+
+      Institution::OrganisationUnit.any_instance.expects(:save).times(3).returns(false)
+
+      @ingester.ingest ingest_options
+
+    end
+
+    test 'if system uuid is in ignore list then link child to parent should not be called' do
+
+      ingest_options = { file: @valid_test_file_path }
+
+      units = JSON.parse(File.read(@valid_test_file_path))["organisation_units"]
+
+      units.each {|unit| @ingester.ignore_for_linking unit["system"]["uuid"] }
+
+      OrganisationIngester.any_instance.expects(:link_child_to_parent).never
+
+      @ingester.ingest ingest_options
+
+    end
+
   end
 
 end
