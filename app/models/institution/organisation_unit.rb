@@ -7,5 +7,8 @@ class Institution::OrganisationUnit < ApplicationRecord
   validates :system_uuid, presence: true, uniqueness: { scope: :institution, message: "should be unique to the institution" }
   validates :system_modified_at, presence: true
   validates :unit_type, presence: true
+  validates :institution, presence: true
+
+  default_scope { where(institution_id: Institution.current_id) }
 
 end
