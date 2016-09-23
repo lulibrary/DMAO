@@ -43,7 +43,7 @@ module JSONIngesters
 
     test 'should raise ingest file error when invalid filepath' do
 
-      error = assert_raises DMAO::Ingesters::IngestFileError do
+      error = assert_raises DMAO::Ingesters::Errors::IngestFileError do
         @ingester.parse_file "/testing/nonexistent/file/path"
       end
 
@@ -53,7 +53,7 @@ module JSONIngesters
 
     test 'should raise ingest file error when contents is not json' do
 
-      error = assert_raises DMAO::Ingesters::IngestFileError do
+      error = assert_raises DMAO::Ingesters::Errors::IngestFileError do
         @ingester.parse_file @non_json_file_path
       end
 
@@ -63,7 +63,7 @@ module JSONIngesters
 
     test 'should raise ingest file error when contents does not contain organisation units array' do
 
-      error = assert_raises DMAO::Ingesters::IngestFileError do
+      error = assert_raises DMAO::Ingesters::Errors::IngestFileError do
         @ingester.parse_file @no_org_units_file_path
       end
 
