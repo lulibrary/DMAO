@@ -3,9 +3,11 @@
 one:
   name: MyString
   description: MyString
+  organisation_ingester: :json_organisation_ingester
   version: 1
 
 two:
   name: MyString
   description: MyString
   version: 1
+  organisation_ingester: :json_organisation_ingester

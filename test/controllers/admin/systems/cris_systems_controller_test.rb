@@ -35,14 +35,14 @@ module Admin
       test 'Create - should save new cris system if all field specified' do
 
         assert_difference '::Systems::CrisSystem.count' do
-          post :create, params: { systems_cris_system: { name: 'Testing Cris System', description: 'Testing CRIS Systems', version: 1 } }
+          post :create, params: { systems_cris_system: { name: 'Testing Cris System', description: 'Testing CRIS Systems', version: 1, organisation_ingester: "json_organisation_ingester" } }
         end
 
       end
 
       test 'Create - should redirect to cris system details when succesfully created' do
 
-        post :create, params: { systems_cris_system: { name: 'Testing Cris System', description: 'Testing CRIS Systems', version: 1 } }
+        post :create, params: { systems_cris_system: { name: 'Testing Cris System', description: 'Testing CRIS Systems', version: 1, organisation_ingester: "json_organisation_ingester" } }
 
         assert_redirected_to admin_systems_cris_system_path ::Systems::CrisSystem.last
 
@@ -70,7 +70,8 @@ module Admin
                         name: 'testing-key-name',
                         display_name: 'Testing key name'
                     }
-                }
+                },
+                organisation_ingester: "json_organisation_ingester"
             }
         }
 
@@ -101,7 +102,8 @@ module Admin
                           name: 'testing-key-name-2',
                           display_name: 'Testing key name two'
                       }
-                  }
+                  },
+                  organisation_ingester: "json_organisation_ingester"
               }
           }
 
@@ -122,7 +124,8 @@ module Admin
                         display_name: 'Testing key name',
                         secure: true
                     }
-                }
+                },
+                organisation_ingester: "json_organisation_ingester"
             }
         }
 

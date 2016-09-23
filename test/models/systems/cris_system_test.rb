@@ -30,6 +30,11 @@ class Systems::CrisSystemTest < ActiveSupport::TestCase
     refute @cris_system.valid?
   end
 
+  test 'Should be invalid without organisation ingester' do
+    @cris_system.organisation_ingester = nil
+    refute @cris_system.valid?
+  end
+
   test 'Should set systemable type to "Systems::CrisSystem" when adding configuration key' do
 
     config_key = @cris_system.configuration_keys.new
