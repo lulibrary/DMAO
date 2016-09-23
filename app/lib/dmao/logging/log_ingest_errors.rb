@@ -16,7 +16,7 @@ module DMAO
 
         @logged_errors = true
 
-        @logger.error("#{system_uuid} - #{error_message} - #{errors.to_json}")
+        @logger.error("#{system_uuid} - #{error_message} - #{errors}")
 
       end
 

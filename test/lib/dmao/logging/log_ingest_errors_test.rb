@@ -75,13 +75,15 @@ module DMAO
 
       end
 
-      test 'logger should log error with system uuid, error message and errors hash when passed in' do
+      test 'logger should log error with system uuid, error message and errors when passed in' do
 
         @test_class.create_logger "test_log_file"
 
-        DMAO::Ingesters::IngestLogger.any_instance.expects(:error).once.with("system_uuid - error message - #{{errors_1: 'testing'}.to_json}")
+        errors = {errors_1: 'testing'}.to_json
 
-        @test_class.log_ingest_error "system_uuid", "error message", { errors_1: "testing" }
+        DMAO::Ingesters::IngestLogger.any_instance.expects(:error).once.with("system_uuid - error message - #{errors}")
+
+        @test_class.log_ingest_error "system_uuid", "error message", errors
 
       end
 
