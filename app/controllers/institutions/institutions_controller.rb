@@ -2,6 +2,8 @@ module Institutions
 
   class InstitutionsController < ApplicationController
 
+    layout 'institution_admin'
+
     include Institutions::InstitutionDetails
 
     before_action :authenticate_institution_admin!

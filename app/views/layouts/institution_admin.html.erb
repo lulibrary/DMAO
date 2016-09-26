@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= content_for?(:title) ? yield(:title) : "DMA Online" %> </title>
+
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+
+  <%= csrf_meta_tags %>
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+
+<div class="wrapper">
+
+  <%= render "partials/institution_admin/header" %>
+
+  <%= render "partials/institution_admin/sidebar" %>
+
+  <div class="content-wrapper">
+
+    <section class="content-header">
+      <h1>
+        <%= content_for?(:title) ? yield(:title) : "DMA Online" %>
+      </h1>
+    </section>
+
+    <section class="content">
+
+      <%= yield %>
+
+    </section>
+
+  </div>
+
+  <%= render "partials/footer" %>
+
+</div>
+
+<%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+</body>
+</html>
