@@ -1,12 +1,12 @@
 <header class="main-header">
 
   <!-- Logo -->
-  <a href="index2.html" class="logo">
-    <!-- mini logo for sidebar mini 50x50 pixels -->
-    <span class="logo-mini"><b>DMA</b></span>
-    <!-- logo for regular state and mobile devices -->
-    <span class="logo-lg"><b>DMA</b> Online</span>
-  </a>
+  <%= link_to institution_dashboard_path, class: "logo" do %>
+      <!-- mini logo for sidebar mini 50x50 pixels -->
+      <span class="logo-mini"><b>DMA</b></span>
+      <!-- logo for regular state and mobile devices -->
+      <span class="logo-lg"><b>DMA</b> Online</span>
+  <% end %>
 
   <!-- Header Navbar -->
   <nav class="navbar navbar-static-top" role="navigation">
