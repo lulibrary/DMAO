@@ -61,6 +61,8 @@ Rails.application.routes.draw do
 
       resources :users
 
+      get '/', to: 'dashboard#dashboard', as: :dashboard
+
     end
 
   end

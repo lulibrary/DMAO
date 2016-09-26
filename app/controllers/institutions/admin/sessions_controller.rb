@@ -8,6 +8,14 @@ module Institutions
 
       layout 'auth'
 
+      private
+
+      def after_sign_out_path_for(resource)
+
+        stored_location_for(resource) || institution_dashboard_path
+
+      end
+
     end
 
   end
