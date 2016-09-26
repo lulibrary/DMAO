@@ -1,45 +1,234 @@
-<h1><%= @institution.name %></h1>
+<% content_for :title, 'Institution Profile' %>
 
-<p>
-  <strong>Name:</strong>
-  <%= @institution.name %>
-</p>
+<div class="row">
+  <div class="col-md-3">
 
-<p>
-  <strong>Decription:</strong>
-  <%= @institution.description %>
-</p>
+    <!-- Profile Image -->
+    <div class="box box-primary">
+      <div class="box-body box-profile">
+        <img class="profile-user-img img-responsive img-circle" src="../../dist/img/user4-128x128.jpg" alt="User profile picture">
 
+        <h3 class="profile-username text-center"><%= @institution.name %></h3>
 
-<p>
-  <strong>Identifier:</strong>
-  <%= @institution.identifier %>
-</p>
+        <p class="text-muted text-center"><%= link_to @institution.url %></p>
 
-<p>
-  <strong>URL:</strong>
-  <%= @institution.url %>
-</p>
+        <ul class="list-group list-group-unbordered">
+          <li class="list-group-item">
+            <b>Institution Admins</b> <a class="pull-right"><%= @institution.admins.count %></a>
+          </li>
+          <li class="list-group-item">
+            <b>Institution Users</b> <a class="pull-right"><%= @institution.users.count %></a>
+          </li>
+        </ul>
 
-<p>
-  <strong>Contact Name:</strong>
-  <%= @institution.contact_name %>
-</p>
+        <!--<a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>-->
+      </div>
+      <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
 
-<p>
-  <strong>Contact Email:</strong>
-  <%= @institution.contact_email %>
-</p>
+    <!-- Contact Details -->
+    <div class="box box-primary">
+      <div class="box-header with-border">
+        <h3 class="box-title">Contact Details</h3>
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body">
+        <strong><i class="fa fa-user margin-r-5"></i> Name</strong>
 
-<p>
-  <strong>Contact Phone Number:</strong>
-  <%= @institution.contact_phone_number %>
-</p>
+        <p class="text-muted">
+          <%= @institution.contact_name %>
+        </p>
 
-<br/>
+        <strong><i class="fa fa-envelope margin-r-5"></i> Email</strong>
 
-<%= link_to 'Create new admin user', new_admin_institution_admin_path(@institution) %>
+        <p class="text-muted"><%= @institution.contact_email %></p>
 
-<h3>Institution Admins</h3>
+        <% if @institution.contact_phone_number.present? %>
 
-<%= render 'admin/institutions/admins/table' %>
+          <strong><i class="fa fa-phone margin-r-5"></i> Phone Number</strong>
+
+          <p>
+            <%= @institution.contact_phone_number %>
+          </p>
+
+        <% end %>
+
+      </div>
+      <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+
+    <!-- Institution Details -->
+    <div class="box box-primary">
+      <div class="box-header with-border">
+        <h3 class="box-title">Details</h3>
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body">
+        <strong><i class="fa fa-university margin-r-5"></i> Identifier</strong>
+
+        <p class="text-muted">
+          <%= @institution.identifier %>
+        </p>
+
+        <hr>
+
+        <strong><i class="fa fa-external-link margin-r-5"></i> URL</strong>
+
+        <p class="text-muted"><%= link_to @institution.url %></p>
+
+        <% if @institution.description.present? %>
+
+          <hr>
+
+          <strong>Description</strong>
+
+          <p><%= @institution.description %></p>
+
+        <% end %>
+
+      </div>
+      <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+  </div>
+  <!-- /.col -->
+  <div class="col-md-9">
+    <div class="nav-tabs-custom">
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#admin-users" data-toggle="tab"><i class="fa fa-users margin-r-5"></i> Admin Users</a></li>
+        <li><a href="#configuration" data-toggle="tab"><i class="fa fa-cogs margin-r-5"></i> Configuration</a></li>
+        <li><a href="#settings" data-toggle="tab"><i class="fa fa-cog margin-r-5"></i> Settings</a></li>
+      </ul>
+      <div class="tab-content">
+        <div class="active tab-pane" id="admin-users">
+          <!-- Post -->
+          <div class="row">
+            <%= render 'admin/institutions/admins/table' %>
+          </div>
+          <!-- /.post -->
+        </div>
+        <!-- /.tab-pane -->
+
+        <div class="tab-pane" id="configuration">
+
+          <div class="row">
+            <div class="col-sm-12">
+              <h4>Institution Configuration to be displayed here</h4>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="tab-pane" id="settings">
+
+          <div class="row">
+
+            <div class="col-sm-12">
+
+                <%= form_for [:admin, @institution], html: { class: "form-horizontal" } do |f| %>
+
+                    <% if @institution.errors.any? %>
+                        <div id="error_explanation">
+                          <h2>
+                            <%= pluralize(@institution.errors.count, "error") %> prohibited
+                            this institution from being saved:
+                          </h2>
+                          <ul>
+                            <% @institution.errors.full_messages.each do |msg| %>
+                                <li><%= msg %></li>
+                            <% end %>
+                          </ul>
+                        </div>
+                    <% end %>
+
+                    <div class="form-group">
+
+                      <%= f.label :name, class: "col-sm-2 control-label" %>
+
+                      <div class="col-sm-10">
+                        <%= f.text_field :name, class: "form-control" %>
+                      </div>
+
+                    </div>
+
+                    <div class="form-group">
+
+                      <%= f.label :identifier, class: "col-sm-2 control-label" %>
+
+                      <div class="col-sm-10">
+                        <%= f.text_field :identifier, class: "form-control" %>
+                      </div>
+
+                    </div>
+
+                    <div class="form-group">
+
+                      <%= f.label :description, class: "col-sm-2 control-label" %>
+
+                      <div class="col-sm-10">
+                        <%= f.text_area :description, class: "form-control" %>
+                      </div>
+
+                    </div>
+
+                    <div class="form-group">
+
+                      <%= f.label :contact_name, class: "col-sm-2 control-label" %>
+
+                      <div class="col-sm-10">
+                        <%= f.text_field :contact_name, class: "form-control" %>
+                      </div>
+
+                    </div>
+
+                    <div class="form-group">
+
+                      <%= f.label :contact_email, class: "col-sm-2 control-label" %>
+
+                      <div class="col-sm-10">
+                        <%= f.text_field :contact_email, class: "form-control" %>
+                      </div>
+
+                    </div>
+
+                    <div class="form-group">
+
+                      <%= f.label :contact_phone_number, class: "col-sm-2 control-label" %>
+
+                      <div class="col-sm-10">
+                        <%= f.text_field :contact_phone_number, class: "form-control" %>
+                      </div>
+
+                    </div>
+
+                    <div class="form-group">
+
+                      <%= f.label :url, class: "col-sm-2 control-label" %>
+
+                      <div class="col-sm-10">
+                        <%= f.text_field :url, class: "form-control" %>
+                      </div>
+
+                    </div>
+
+                    <p>
+                      <%= f.submit class: "btn btn-primary pull-right" %>
+                    </p>
+
+                <% end %>
+
+            </div>
+
+          </div>
+
+        </div>
+        <!-- /.tab-pane -->
+      </div>
+      <!-- /.tab-content -->
+    </div>
+    <!-- /.nav-tabs-custom -->
+  </div>
+  <!-- /.col -->
+</div>
