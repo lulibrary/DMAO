@@ -33,6 +33,7 @@ Rails.application.routes.draw do
       resources :cris_systems, controller: 'cris_systems'
       get 'cris_systems/:id/config_keys', to: 'cris_systems#config_keys'
     end
+    get '/', to: 'dashboard#dashboard', as: :dashboard
   end
 
   scope '/:institution_identifier', module: 'institutions' do
@@ -59,6 +60,8 @@ Rails.application.routes.draw do
     scope '/:institution_identifier', module: 'institutions', as: :institution do
 
       resources :users
+
+      get '/', to: 'dashboard#dashboard', as: :dashboard
 
     end
 

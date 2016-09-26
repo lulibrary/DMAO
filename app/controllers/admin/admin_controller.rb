@@ -2,6 +2,8 @@ module Admin
 
   class AdminController < ApplicationController
 
+    layout 'admin'
+
     before_action :authenticate_dmao_admin!
     before_action :set_raven_admin_context
 
