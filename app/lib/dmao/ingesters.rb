@@ -6,7 +6,11 @@ module DMAO
     ORG_INGESTERS = {}
     FILE_INGESTERS = []
 
+    VALID_INGESTER_TYPES = [:file, nil]
+
     def self.register name, display_name, version, type, ingester, ingester_type=nil
+
+      raise DMAO::Ingesters::Errors::InvalidIngesterType.new unless VALID_INGESTER_TYPES.include? ingester_type
 
       details = { name: name, display_name: display_name, version: version, type: type, ingester_type: ingester_type }
 

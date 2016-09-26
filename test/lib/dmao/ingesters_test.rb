@@ -71,5 +71,18 @@ module DMAO
 
     end
 
+    test 'should raise invalid ingester type if not in the valid array' do
+
+      assert_raises DMAO::Ingesters::Errors::InvalidIngesterType do
+        DMAO::Ingesters.register(:ingester_name, "INGESTER Name", 0.1, :organisation, String, :invalid)
+      end
+
+      DMAO::Ingesters::ALL.delete(:ingester_name)
+      DMAO::Ingesters::DETAILS.delete(:ingester_name)
+      DMAO::Ingesters::ORG_INGESTERS.delete(:ingester_name)
+      DMAO::Ingesters::FILE_INGESTERS.delete(:ingester_name)
+
+    end
+
   end
 end
