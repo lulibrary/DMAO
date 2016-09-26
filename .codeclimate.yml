@@ -24,6 +24,7 @@ engines:
     enabled: true
     exclude_fingerprints:
     - 1800b7dde7bb9294e06a5b85c19c138b
+    - 8783d3d9e80ed734768fbdb29422ad44 # Parameters > 5 in register ingester method
 ratings:
   paths:
   - Gemfile.lock

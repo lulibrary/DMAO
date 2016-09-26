@@ -4,13 +4,20 @@ module DMAO
     ALL = []
     DETAILS = {}
     ORG_INGESTERS = {}
+    FILE_INGESTERS = []
 
-    def self.register name, display_name, version, type, ingester
+    VALID_INGESTER_TYPES = [:file, nil]
 
-      details = { name: name, display_name: display_name, version: version, type: type }
+    def self.register name, display_name, version, type, ingester, ingester_type=nil
+
+      raise DMAO::Ingesters::Errors::InvalidIngesterType.new unless VALID_INGESTER_TYPES.include? ingester_type
+
+      details = { name: name, display_name: display_name, version: version, type: type, ingester_type: ingester_type }
 
       ALL.insert(-1, name)
       DETAILS[name] = details
+
+      FILE_INGESTERS.insert(-1, name) if ingester_type == :file
 
       ORG_INGESTERS[name] = ingester if type == :organisation
 
