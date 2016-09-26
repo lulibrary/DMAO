@@ -6,29 +6,6 @@
     <!-- Sidebar Menu -->
     <ul class="sidebar-menu">
       <li class="header"></li>
-      <li class="treeview <%= 'active' if params[:controller] == 'admin/institutions' %>">
-        <a href="#"><i class="fa fa-home"></i> <span>Institutions</span>
-          <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        </a>
-        <ul class="treeview-menu">
-          <li class="<%= 'active' if ((params[:controller] == 'admin/institutions') && (params[:action] == 'index')) %>"><%= link_to "All Institutions", admin_institutions_path %></li>
-          <li class="<%= 'active' if ((params[:controller] == 'admin/institutions') && (params[:action] == 'new')) %>"><%= link_to "New Institution", new_admin_institution_path %></li>
-        </ul>
-      </li>
-
-      <li class="treeview <%= 'active' if !params[:controller].match(/^admin\/systems.*/).nil? %>">
-        <a href="#"><i class="fa fa-home"></i> <span>Systems</span>
-          <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        </a>
-        <ul class="treeview-menu">
-          <li class="<%= 'active' if ((params[:controller] == 'admin/systems/cris_systems')) %>"><%= link_to "CRIS Systems", admin_systems_cris_systems_path %></li>
-        </ul>
-      </li>
-
     </ul>
     <!-- /.sidebar-menu -->
   </section>
