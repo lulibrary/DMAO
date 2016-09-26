@@ -16,4 +16,4 @@
 //= require adminlte
 //= require nested_form_fields
 
-//= require_tree .
+//= require_tree ./admin
