@@ -72,6 +72,48 @@ module Configuration
 
       end
 
+      test 'details should return nil for invalid system id' do
+
+        assert_nil @cris_system.details
+
+      end
+
+      test 'details should return instance of systems cris system when valid system id' do
+
+        @cris_system.system_id = systems_cris_systems(:one).id
+
+        assert_instance_of ::Systems::CrisSystem, @cris_system.details
+
+      end
+
+      test 'configuration values should return array of configuration values for all valid config values' do
+
+        @cris_system.config_values = [systems_configuration_values(:one).id]
+
+        assert_instance_of Array, @cris_system.configuration_values
+
+        @cris_system.configuration_values.each do |v|
+
+          assert_instance_of ::Systems::ConfigurationValue, v
+
+        end
+
+      end
+
+      test 'configuration values should return array of configuration values with nil for invalid config value id' do
+
+        @cris_system.config_values = [systems_configuration_values(:one).id, 0]
+
+        config_values = @cris_system.configuration_values
+
+        assert_instance_of Array, config_values
+
+        assert_instance_of ::Systems::ConfigurationValue, config_values[0]
+
+        assert_nil config_values[1]
+
+      end
+
     end
   end
 end

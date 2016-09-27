@@ -115,7 +115,46 @@
 
           <div class="row">
             <div class="col-sm-12">
-              <h4>Institution Configuration to be displayed here</h4>
+              <% if @institution.configuration %>
+
+                <div class="box-group" id="accordion">
+                  <!-- we are adding the .panel class so bootstrap.js collapse plugin detects it -->
+                  <div class="panel box box-primary">
+                    <div class="box-header with-border">
+                      <h4 class="box-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#crisSystem">
+                          Cris System Configuration
+                        </a>
+                      </h4>
+                    </div>
+                    <div id="crisSystem" class="panel-collapse collapse in">
+                      <div class="box-body">
+                        <dl class="dl-horizontal">
+                          <dt>CRIS System</dt>
+                          <dd><%= @institution.configuration.systems_configuration.cris_system.details.name %></dd>
+                          <dd><%= @institution.configuration.systems_configuration.cris_system.details.description %></dd>
+                          <dd>Version: <%= @institution.configuration.systems_configuration.cris_system.details.version %></dd>
+                          <br>
+                          <% @institution.configuration.systems_configuration.cris_system.configuration_values.each do |v| %>
+                            <dd><%= v.configuration_key.display_name %>: <%= v.configuration_key.secure ? "SECURE CONFIG VALUE" : v.value %></dd>
+                          <% end %>
+                          <br>
+                          <dt>Organisation Ingester</dt>
+                          <dd><%= @institution.configuration.systems_configuration.cris_system.details.organisation_ingester %></dd>
+                          <dt>File based?</dt>
+                          <dd><%= DMAO::Ingesters::FILE_INGESTERS.include? @institution.configuration.systems_configuration.cris_system.details.organisation_ingester.to_sym %></dd>
+                        </dl>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              <% else %>
+
+                  <%= link_to "New Configuration", new_admin_institution_configuration_path(institution_id: @institution), class: "btn btn-block btn-primary" %>
+
+              <% end %>
+
             </div>
           </div>
 
