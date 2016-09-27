@@ -55,6 +55,9 @@ gem 'redis-namespace'
 # Application Error Monitoring
 gem "sentry-raven"
 
+# File uploads and Asset storing
+gem 'carrierwave'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
