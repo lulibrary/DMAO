@@ -29,6 +29,30 @@ module Configuration
         @config_values.delete id
       end
 
+      def details
+
+        begin
+          ::Systems::CrisSystem.find(self.system_id)
+        rescue ActiveRecord::RecordNotFound
+          nil
+        end
+
+      end
+
+      def configuration_values
+
+        self.config_values.map do |v|
+
+          begin
+            ::Systems::ConfigurationValue.find(v)
+          rescue ActiveRecord::RecordNotFound
+            nil
+          end
+
+        end
+
+      end
+
       private
 
       def config_values_array
