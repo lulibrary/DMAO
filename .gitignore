@@ -31,3 +31,8 @@ public/assets/
 .idea/runConfigurations/*
 .idea/*
 !/test/fixtures/files/*.log
+
+# Ignore uploads, ingest data and logs in public
+public/uploads
+public/ingest_data
+public/ingest_logs
