@@ -9,5 +9,6 @@ class IngestJob < ApplicationRecord
   belongs_to :institution
 
   mount_uploader :ingest_log_file, IngestLogFileUploader
+  mount_uploader :ingest_data_file, IngestDataFileUploader
 
 end
