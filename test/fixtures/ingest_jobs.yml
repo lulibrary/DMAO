@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+ingest:
+  ingest_time: 
+  status: MyString
+  ingest_type: ingest
+  ingest_mode: automatic
+  ingest_area: organisation
+  institution: luve
+
+refresh:
+  ingest_time: 
+  status: MyString
+  ingest_type: refresh
+  ingest_mode: manual
+  ingest_area: organisation
+  institution: test
