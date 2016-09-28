@@ -99,6 +99,7 @@
       <ul class="nav nav-tabs">
         <li class="active"><a href="#admin-users" data-toggle="tab"><i class="fa fa-users margin-r-5"></i> Admin Users</a></li>
         <li><a href="#configuration" data-toggle="tab"><i class="fa fa-cogs margin-r-5"></i> Configuration</a></li>
+        <li><a href="#ingest-jobs" data-toggle="tab"><i class="fa fa-cloud-download margin-r-5"></i> Ingests</a></li>
         <li><a href="#settings" data-toggle="tab"><i class="fa fa-cog margin-r-5"></i> Settings</a></li>
       </ul>
       <div class="tab-content">
@@ -154,6 +155,49 @@
                   <%= link_to "New Configuration", new_admin_institution_configuration_path(institution_id: @institution), class: "btn btn-block btn-primary" %>
 
               <% end %>
+
+            </div>
+          </div>
+
+        </div>
+
+        <div class="tab-pane" id="ingest-jobs">
+
+          <div class="row">
+            <div class="col-sm-12">
+
+              <div class="box table-responsive">
+                <div class="box-body no-padding">
+                  <table class="table table-striped table-hover table-align-center">
+                    <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Ingest Time</th>
+                      <th>Ingest Status</th>
+                      <th>Type</th>
+                      <th>Mode</th>
+                      <th>Area</th>
+                      <th>Log File</th>
+                      <th>Data File</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% @institution.ingest_jobs.each do |job| %>
+                        <tr>
+                          <th scope="row"><%= job.id %></th>
+                          <td><%= job.ingest_time %></td>
+                          <td><%= job.status %></td>
+                          <td><%= job.ingest_type %></td>
+                          <td><%= job.ingest_mode %></td>
+                          <td><%= job.ingest_area %></td>
+                          <td><%= job.ingest_log_file %></td>
+                          <td><%= job.ingest_data_file %></td>
+                        </tr>
+                    <% end %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
 
             </div>
           </div>
