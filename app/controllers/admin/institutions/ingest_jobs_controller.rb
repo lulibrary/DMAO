@@ -12,12 +12,16 @@ module Admin
 
           @ingest_job = create_new_ingest_job institution
 
-          @ingest_job.save
+          if @ingest_job.save
 
-          respond_to do |format|
+            ::Admin::Jobs::Institution::ProcessIngestJob.perform_later @ingest_job.id
 
-            format.json { render json: @ingest_job }
-            format.js
+            respond_to do |format|
+
+              format.json { render json: @ingest_job }
+              format.js
+            end
+
           end
 
         rescue ActiveRecord::RecordNotFound, ActionController::UnknownFormat
