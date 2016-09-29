@@ -163,6 +163,8 @@
 
         <div class="tab-pane" id="ingest-jobs">
 
+          <% if @institution.configuration %>
+
           <div class="row">
 
             <% if DMAO::Ingesters::FILE_INGESTERS.include? @institution.configuration.systems_configuration.cris_system.details.organisation_ingester.to_sym %>
@@ -212,6 +214,20 @@
 
             </div>
           </div>
+
+          <% else %>
+
+          <div class="row">
+
+            <div class="col-sm-12">
+
+              <h3>No institution configuration, cannot ingest data for an institution that has no configuration.</h3>
+
+            </div>
+
+          </div>
+
+          <% end %>
 
         </div>
 
