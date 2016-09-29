@@ -165,11 +165,15 @@
 
           <div class="row">
 
-            <div class="col-sm-12" style="padding-bottom: 10px;">
-              <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#newIngest">
-                Manual Ingest
-              </button>
-            </div>
+            <% if DMAO::Ingesters::FILE_INGESTERS.include? @institution.configuration.systems_configuration.cris_system.details.organisation_ingester.to_sym %>
+
+              <div class="col-sm-12" style="padding-bottom: 10px;">
+                <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#newIngest">
+                  Manual Ingest
+                </button>
+              </div>
+
+            <% end %>
 
             <div class="col-sm-12">
 
