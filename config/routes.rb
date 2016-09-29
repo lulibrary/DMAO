@@ -28,6 +28,7 @@ Rails.application.routes.draw do
     resources :institutions do
       resources :admins, controller: 'institutions/admins'
       resources :configurations, controller: 'institutions/configurations'
+      resources :ingest_jobs, controller: 'institutions/ingest_jobs'
     end
     namespace :systems do
       resources :cris_systems, controller: 'cris_systems'

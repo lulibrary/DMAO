@@ -8,6 +8,9 @@ module DMAO
 
     VALID_INGESTER_TYPES = [:file, nil]
 
+    VALID_INGEST_AREAS = [:organisation]
+    INGEST_AREA_DISPLAY_NAMES = { organisation: "Organisation Structure" }
+
     def self.register name, display_name, version, type, ingester, ingester_type=nil
 
       raise DMAO::Ingesters::Errors::InvalidIngesterType.new unless VALID_INGESTER_TYPES.include? ingester_type
