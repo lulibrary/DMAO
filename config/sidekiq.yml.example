@@ -1,0 +1,14 @@
+default: &default
+  redis_host:
+  redis_port:
+  redis_password:
+development:
+  <<: *default
+  redis_db:
+test:
+  <<: *default
+  port:
+  redis_db:
+production:
+  <<: *default
+  redis_db:

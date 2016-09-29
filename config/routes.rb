@@ -1,3 +1,6 @@
+require 'sidekiq/web'
+Sidekiq::Web.set :session_secret, Rails.application.secrets[:secret_key_base]
+
 Rails.application.routes.draw do
 
   devise_for :institution_users, skip: :all, class_name: "Institution::User"
@@ -35,6 +38,9 @@ Rails.application.routes.draw do
       get 'cris_systems/:id/config_keys', to: 'cris_systems#config_keys'
     end
     get '/', to: 'dashboard#dashboard', as: :dashboard
+    authenticate :dmao_admin do
+      mount Sidekiq::Web => 'sidekiq'
+    end
   end
 
   scope '/:institution_identifier', module: 'institutions' do
