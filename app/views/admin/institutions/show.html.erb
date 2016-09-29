@@ -334,15 +334,19 @@
             <span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title">Manual Ingest</h4>
         </div>
-        <%= form_for @institution.ingest_jobs.new, url: admin_institutions_path(@institution), html: { class: "form-horizontal" } do |f| %>
+        <%= form_for @institution.ingest_jobs.new, url: admin_institution_ingest_jobs_path(@institution), remote: true, authenticity_token: true, html: { class: "form-horizontal" } do |f| %>
         <div class="modal-body">
+
+          <div id="ingest_error_explanation">
+
+          </div>
 
               <div class="form-group">
 
                 <%= f.label :ingest_area, class: "col-sm-3 control-label" %>
 
                 <div class="col-sm-9">
-                  <%= f.select :ingest_area, options_for_select([["Organisation Structure", "organisation"]]), { include_blank: 'Choose Ingest Area' }, { class: "form-control" } %>
+                  <%= f.select :ingest_area, options_for_select(DMAO::Ingesters::INGEST_AREA_DISPLAY_NAMES.collect { |k, v| [v, k] }), { include_blank: 'Choose Ingest Area' }, { class: "form-control" } %>
                 </div>
 
               </div>
