@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Admin::Jobs::Institution::ProcessIngestJobTest < ActiveJob::TestCase
+class Admin::Jobs::Institution::ManualIngestJobTest < ActiveJob::TestCase
 
   def setup
     @ingest_job = ingest_jobs(:ingest)
@@ -10,7 +10,7 @@ class Admin::Jobs::Institution::ProcessIngestJobTest < ActiveJob::TestCase
 
     IngestJob.expects(:find).with(@ingest_job.id).once
 
-    ::Admin::Jobs::Institution::ProcessIngestJob.perform_now @ingest_job.id
+    ::Admin::Jobs::Institution::ManualIngestJob.perform_now @ingest_job.id
 
   end
 
@@ -18,7 +18,7 @@ class Admin::Jobs::Institution::ProcessIngestJobTest < ActiveJob::TestCase
 
     Rails.logger.expects(:error).once
 
-    ::Admin::Jobs::Institution::ProcessIngestJob.perform_now 0
+    ::Admin::Jobs::Institution::ManualIngestJob.perform_now 0
 
   end
 

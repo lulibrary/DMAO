@@ -14,7 +14,7 @@ module Admin
 
           if @ingest_job.save
 
-            ::Admin::Jobs::Institution::ProcessIngestJob.perform_later @ingest_job.id
+            ::Admin::Jobs::Institution::ManualIngestJob.perform_later @ingest_job.id
 
             respond_to do |format|
 

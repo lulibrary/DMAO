@@ -40,7 +40,7 @@ module Admin
 
         assert_enqueued_jobs 0
 
-        assert_enqueued_with(job: Admin::Jobs::Institution::ProcessIngestJob) do
+        assert_enqueued_with(job: Admin::Jobs::Institution::ManualIngestJob) do
 
           post :create, xhr: true, params: { institution_id: @institution.id, ingest_job: { ingest_area: "organisation", ingest_data_file: fixture_file_upload("files/json_organisation_units.json") } }
 
