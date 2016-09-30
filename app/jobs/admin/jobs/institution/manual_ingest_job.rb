@@ -18,9 +18,9 @@ module Admin
 
             ingester_options = get_ingester_options ingest_job.ingest_area, configuration
 
-            ingester_options.merge!({ file: ingest_job.ingest_data_file.to_s })
+            ingester_options.merge!({ "ingest_job_id" => ingest_job_id, "file" => "#{CarrierWave.root}/#{ingest_job.ingest_data_file.to_s}" })
 
-            ::Admin::Jobs::IngesterIngestJob.perform_later ingester_name, ingester_options
+            ::Admin::Jobs::IngesterIngestJob.perform_later institution.id, ingester_name, ingester_options
 
           rescue ActiveRecord::RecordNotFound => e
             Rails.logger.error "[#{self.class}] [#{job_id}] Failed to find ingest job in system with id #{ingest_job_id}"
