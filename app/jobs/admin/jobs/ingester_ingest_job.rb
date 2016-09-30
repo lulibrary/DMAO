@@ -15,7 +15,7 @@ module Admin
         ::Institution.current_id = nil
       end
 
-      def perform(institution_id, ingester_name, ingester_options)
+      def perform(_institution_id, ingester_name, ingester_options)
 
         ingester = new_ingester ingester_name
 
