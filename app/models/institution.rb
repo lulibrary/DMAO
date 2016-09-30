@@ -11,5 +11,6 @@ class Institution < ApplicationRecord
   has_one :configuration, :class_name => 'Institution::Configuration'
   has_many :configuration_values, :class_name => 'Systems::ConfigurationValue', dependent: :destroy
   has_many :ingest_jobs, dependent: :destroy
+  has_many :organisation_units, class_name: 'Institution::OrganisationUnit'
 
 end
