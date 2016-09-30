@@ -7,6 +7,7 @@ module Admin
     class IngestJobsControllerTest < ActionController::TestCase
 
       include Devise::Test::ControllerHelpers
+      include ActiveJob::TestHelper
 
       def setup
 
@@ -32,6 +33,20 @@ module Admin
         post :create, xhr: true, params: { institution_id: 0, ingest_job: { ingest_area: "organisation", ingest_data_file: fixture_file_upload("files/json_organisation_units.json") } }
 
         assert_response :not_found
+
+      end
+
+      test 'Create - should schedule ingest job for ingesting the data' do
+
+        assert_enqueued_jobs 0
+
+        assert_enqueued_with(job: Admin::Jobs::Institution::ManualIngestJob) do
+
+          post :create, xhr: true, params: { institution_id: @institution.id, ingest_job: { ingest_area: "organisation", ingest_data_file: fixture_file_upload("files/json_organisation_units.json") } }
+
+        end
+
+        assert_enqueued_jobs 1
 
       end
 

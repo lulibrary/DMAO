@@ -15,5 +15,8 @@ module DMAO
     # Custom Validators path
     config.autoload_paths += %W["#{config.root}/app/validators/"]
 
+    # Active job queue adapter
+    config.active_job.queue_adapter = :sidekiq
+
   end
 end

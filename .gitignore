@@ -25,6 +25,7 @@ config/database.yml
 config/redis.yml
 config/dmao.yml
 config/sentry.yml
+config/sidekiq.yml
 
 vendor/assets/components
 public/assets/
