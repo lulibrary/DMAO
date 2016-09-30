@@ -4,7 +4,7 @@ module DMAO
 
       class UnknownIngester < StandardError
 
-        def initialize(msg="Unknown ingest area, please check that this is a valid ingest area.", )
+        def initialize(msg="Unknown ingest area, please check that this is a valid ingest area.")
 
           super(msg)
 
