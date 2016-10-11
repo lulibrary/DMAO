@@ -38,11 +38,9 @@ module Api
           Institution.current_id = institution.id
 
         rescue ActiveRecord::RecordNotFound
-          return render json: {
-              errors: {
-                  institution_id: "Institution not found for institution id #{params[:institution_id]}"
-              }
-          }, status: :not_found
+
+          return error_response({ institution_id: "Institution not found for institution id #{params[:institution_id]}" }, :not_found)
+
         end
 
         begin
@@ -51,11 +49,7 @@ module Api
 
         rescue ActiveRecord::RecordNotFound
 
-          return render json: {
-              errors: {
-                  organisation_unit: "Organisation unit not found for organisation unit id #{params[:id]}"
-              }
-          }, status: :not_found
+          return error_response({ organisation_unit: "Organisation unit not found for organisation unit id #{params[:id]}" }, :not_found)
 
         end
 
@@ -67,11 +61,7 @@ module Api
 
           rescue ActiveRecord::RecordNotFound
 
-            return render json: {
-                errors: {
-                    parent_uuid: "Organisation unit not found for parent uuid #{params[:parent_uuid]}"
-                }
-            }, status: :unprocessable_entity
+            return error_response({ parent_uuid: "Organisation unit not found for parent uuid #{params[:parent_uuid]}" }, :unprocessable_entity)
 
           end
 
@@ -82,9 +72,7 @@ module Api
         if organisation_unit.update(organisation_unit_params)
           render json: organisation_unit, serializer: Api::V1::OrganisationUnitSerializer, status: :ok
         else
-          render json: {
-              errors: organisation_unit.errors
-          }, status: :unprocessable_entity
+          error_response organisation_unit.errors, :unprocessable_entity
         end
 
       end
@@ -107,6 +95,30 @@ module Api
                     system_modified_at: Time.at(params['system_modified_at'].to_i)
                 }
             )
+      end
+
+      def organisation_unit_not_found msg=""
+
+        errors = { organisation_unit: msg }
+
+        error_response errors, :not_found
+
+      end
+
+      def parent_unit_not_found msg=""
+
+        errors = { parent_uuid: msg }
+
+        error_response errors, :unprocessable_entity
+
+      end
+
+      def error_response errors, status
+
+        render json: {
+            errors: errors
+        }, status: status
+
       end
 
     end
