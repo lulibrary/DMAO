@@ -181,6 +181,10 @@ module Api
 
       test "UPDATE - sets parent attribute on organisation unit when specified" do
 
+        org_unit = Institution::OrganisationUnit.unscoped.find(institution_organisation_units(:one).id)
+
+        assert_nil org_unit.parent
+
         set_token_header @valid_token
 
         patch :update, params: @org_unit_update_params
