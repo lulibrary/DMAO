@@ -41,7 +41,7 @@ module Api
 
         assert_response :created
 
-        assert_serializer "API::V1::OrganisationUnitSerializer"
+        assert_serializer "Api::V1::OrganisationUnitSerializer"
 
       end
 

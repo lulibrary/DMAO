@@ -20,7 +20,7 @@ module Api
         organisation_unit = institution.organisation_units.new(organisation_unit_params)
 
         if organisation_unit.save
-          render json: organisation_unit, serializer: API::V1::OrganisationUnitSerializer, status: :created
+          render json: organisation_unit, serializer: Api::V1::OrganisationUnitSerializer, status: :created
         else
           render json: {
               errors: organisation_unit.errors
