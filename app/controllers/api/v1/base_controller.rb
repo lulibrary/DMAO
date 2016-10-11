@@ -1,4 +1,4 @@
-module API:V1
+module API::V1
 
   class BaseController < ::ApiBaseController
 
