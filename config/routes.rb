@@ -3,9 +3,8 @@ Rails.application.routes.draw do
   devise_for :institution_users, skip: :all, class_name: "Institution::User"
   devise_for :institution_admins, skip: :all, class_name: "Institution::Admin"
 
-  root to: 'pages#home'
-
-
+  root to: redirect('https://lulibrary.github.io/DMAO')
+  
   post '/institution-login', to: 'pages#institution_login', as: :institution_login_selection
 
   scope :admin do

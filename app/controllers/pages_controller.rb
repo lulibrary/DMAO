@@ -1,14 +1,5 @@
 class PagesController < ApplicationController
 
-  layout 'info'
-
-  def home
-
-    @institution = Institution.new
-    @institutions = Institution.all
-
-  end
-
   def institution_login
 
     begin
