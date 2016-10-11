@@ -16,6 +16,7 @@ engines:
       - php
     exclude_fingerprints:
     - 88b89a5c35290dce4488a14d6b861e85 # Similar code for child parent finding
+    - e7c67c8a24ff4bafbb977349b5a47266 # Similar exception code for parent/child in api org units controller
   eslint:
     enabled: true
   fixme:
