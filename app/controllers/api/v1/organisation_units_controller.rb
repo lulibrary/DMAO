@@ -97,22 +97,6 @@ module Api
             )
       end
 
-      def organisation_unit_not_found msg=""
-
-        errors = { organisation_unit: msg }
-
-        error_response errors, :not_found
-
-      end
-
-      def parent_unit_not_found msg=""
-
-        errors = { parent_uuid: msg }
-
-        error_response errors, :unprocessable_entity
-
-      end
-
       def error_response errors, status
 
         render json: {
