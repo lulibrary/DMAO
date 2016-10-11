@@ -12,7 +12,7 @@ class Service::ApiToken < ApplicationRecord
   end
 
   def generate_api_token
-    SecureRandom.uuid.gsub(/\-/,'')
+    SecureRandom.uuid.delete '-'
   end
 
 end
