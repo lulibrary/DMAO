@@ -29,6 +29,41 @@ module Api
 
       end
 
+      def update
+
+        begin
+          institution = Institution.find params[:institution_id]
+          Institution.current_id = institution.id
+        rescue ActiveRecord::RecordNotFound
+          return error_response({ institution_id: "Institution not found for institution id #{params[:institution_id]}" }, :not_found)
+        end
+
+        begin
+          organisation_unit = Institution::OrganisationUnit.find params[:id]
+        rescue ActiveRecord::RecordNotFound
+          return error_response({ organisation_unit: "Organisation unit not found for organisation unit id #{params[:id]}" }, :not_found)
+        end
+
+        if params[:parent_uuid].present?
+
+          begin
+            parent_organisation_unit = Institution::OrganisationUnit.find params[:parent_uuid]
+          rescue ActiveRecord::RecordNotFound
+            return error_response({ parent_uuid: "Organisation unit not found for parent uuid #{params[:parent_uuid]}" }, :unprocessable_entity)
+          end
+
+          organisation_unit.parent = parent_organisation_unit
+
+        end
+
+        if organisation_unit.update(organisation_unit_params)
+          render json: organisation_unit, serializer: Api::V1::OrganisationUnitSerializer, status: :ok
+        else
+          error_response organisation_unit.errors, :unprocessable_entity
+        end
+
+      end
+
       private
 
       def organisation_unit_params
@@ -47,6 +82,14 @@ module Api
                     system_modified_at: Time.at(params['system_modified_at'].to_i)
                 }
             )
+      end
+
+      def error_response errors, status
+
+        render json: {
+            errors: errors
+        }, status: status
+
       end
 
     end
