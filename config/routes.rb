@@ -68,4 +68,12 @@ Rails.application.routes.draw do
 
   end
 
+  namespace :api do
+    namespace :v1 do
+
+      resources :organisation_units, except: [:new, :edit]
+
+    end
+  end
+
 end
