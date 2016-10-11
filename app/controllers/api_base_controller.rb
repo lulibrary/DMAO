@@ -1,6 +1,6 @@
 class ApiBaseController < ActionController::API
 
-  protect_from_forgery with: :null_session
+  include ActionController::HttpAuthentication::Token::ControllerMethods
 
   before_action :set_raven_context
 
