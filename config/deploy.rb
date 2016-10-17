@@ -29,7 +29,7 @@ set :rbenv_map_bins, %w{rake gem bundle ruby rails}
 # set :pty, true
 
 # Default value for :linked_files is []
-append :linked_files, 'config/database.yml', 'config/secrets.yml', 'config/symmetric-encryption.yml', 'config/redis.yml', 'config/sentry.yml'
+append :linked_files, 'config/database.yml', 'config/secrets.yml', 'config/symmetric-encryption.yml', 'config/redis.yml', 'config/sentry.yml', 'config/dmao.yml'
 
 # Default value for linked_dirs is []
 append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/system'
