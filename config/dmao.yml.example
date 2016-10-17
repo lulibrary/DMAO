@@ -1,6 +1,7 @@
 default: &default
   ingest_log:
     directory:
+  ingest_service_base_url:
 
 development:
   <<: *default
