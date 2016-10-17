@@ -31,7 +31,7 @@
 
     <p>
       <%= f.label :organisation_ingester %><br>
-      <%= f.select :organisation_ingester, options_for_select(DMAO::Ingesters::ORG_INGESTERS.collect { |k, _v| ["#{DMAO::Ingesters::DETAILS[k][:display_name]} - Version: #{DMAO::Ingesters::DETAILS[k][:version]}", k.to_s] }, selected: @cris_system.organisation_ingester), include_blank: 'Choose Organisation Ingester' %>
+      <%= f.select :organisation_ingester, options_for_select(DMAO::Ingesters.get_organisation_ingesters.collect { |k, v| ["#{v['display_name']} - #{v['version']}", k]}, selected: @cris_system.organisation_ingester), include_blank: 'Choose Organisation Ingester' %>
     </p>
 
     <%= f.nested_fields_for :configuration_keys do |config_keys| %>
