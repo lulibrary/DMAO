@@ -17,18 +17,26 @@ module Admin
 
       test 'New - Returns new cris system form' do
 
-        get :new
+        VCR.use_cassette("get_organisation_ingesters") do
 
-        assert_template :new
+          get :new
+
+          assert_template :new
+
+        end
 
       end
 
       test 'New - assigns new cris system' do
 
-        get :new
+        VCR.use_cassette("get_organisation_ingesters") do
 
-        assert assigns(:cris_system)
-        assert_instance_of ::Systems::CrisSystem, assigns(:cris_system)
+          get :new
+
+          assert assigns(:cris_system)
+          assert_instance_of ::Systems::CrisSystem, assigns(:cris_system)
+
+        end
 
       end
 
@@ -50,11 +58,15 @@ module Admin
 
       test 'Create - should return the new cris system form when invalid cris system' do
 
-        post :create, params: { systems_cris_system: { name: nil, description: 'Testing CRIS Systems', version: 1 } }
+        VCR.use_cassette("get_organisation_ingesters") do
 
-        assert_template :new
+          post :create, params: { systems_cris_system: { name: nil, description: 'Testing CRIS Systems', version: 1 } }
 
-        assert assigns(:cris_system).errors.any?
+          assert_template :new
+
+          assert assigns(:cris_system).errors.any?
+
+        end
 
       end
 
