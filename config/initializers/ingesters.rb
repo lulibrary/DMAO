@@ -1,1 +1,1 @@
-DMAO::Ingesters.register :json_organisation_ingester, "JSON Organisation Ingester", 0.1, :organisation, JSONIngesters::OrganisationIngester, :file
+# DMAO::Ingesters.register :json_organisation_ingester, "JSON Organisation Ingester", 0.1, :organisation, JSONIngesters::OrganisationIngester, :file
