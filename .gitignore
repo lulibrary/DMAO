@@ -36,3 +36,6 @@ public/assets/
 public/uploads
 public/ingest_data
 public/ingest_logs
+
+.env
+.rbenv-gemsets
