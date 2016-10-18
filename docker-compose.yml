@@ -1,0 +1,27 @@
+# DMAO
+# Main DMA Online application
+
+dmao_web:
+  build: .
+  env_file: .env
+  links:
+    - postgres:postgres
+  ports:
+    - "5000:80"
+  volumes:
+    - dmao-data:/data
+
+# Postgres DB
+# Data persistance
+
+postgres:
+  image: "postgres:9.4.5"
+  volumes:
+    - dmao-postgres:/var/lib/postgresql/data
+
+# Redis
+
+redis:
+  image: 'redis'
+  volumes:
+    - dmao-redis:/var/lib/redis/data
