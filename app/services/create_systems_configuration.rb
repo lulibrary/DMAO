@@ -37,15 +37,19 @@ class CreateSystemsConfiguration
 
     # check configurations key values are set for all config keys else errors
 
-    config_key_values.keys.each do |k|
+    if config_key_values.present?
 
-      if config_key_ids.include?(k.to_i)
+      config_key_values.keys.each do |k|
 
-      else
+        if config_key_ids.include?(k.to_i)
 
-        config_key_values.delete(k)
+        else
 
-        systems_configuration.errors.add(:cris_system, "Invalid configuration keys for choosen CRIS System specified.")
+          config_key_values.delete(k)
+
+          systems_configuration.errors.add(:cris_system, "Invalid configuration keys for choosen CRIS System specified.")
+
+        end
 
       end
 
@@ -57,17 +61,21 @@ class CreateSystemsConfiguration
 
     # Store configuration key values
 
-    config_key_values.each_pair do |k, v|
+    if config_key_values.present?
 
-      key = ::Systems::ConfigurationKey.find(k.to_i)
+      config_key_values.each_pair do |k, v| 
 
-      v = v.symbolize_keys
+        key = ::Systems::ConfigurationKey.find(k.to_i)
 
-      config_value = ::Systems::ConfigurationValue.create(institution: @institution, configuration_key: key, value: v[:value])
+        v = v.symbolize_keys
 
-      # set cris system configuration key
+        config_value = ::Systems::ConfigurationValue.create(institution: @institution, configuration_key: key, value: v[:value])
 
-      systems_configuration.cris_system.add_config_value config_value.id
+        # set cris system configuration key
+
+        systems_configuration.cris_system.add_config_value config_value.id
+
+      end
 
     end
 
