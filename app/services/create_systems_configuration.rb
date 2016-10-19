@@ -41,9 +41,7 @@ class CreateSystemsConfiguration
 
       config_key_values.keys.each do |k|
 
-        if config_key_ids.include?(k.to_i)
-
-        else
+        if !config_key_ids.include?(k.to_i)
 
           config_key_values.delete(k)
 
@@ -55,21 +53,15 @@ class CreateSystemsConfiguration
 
     end
 
-    if systems_configuration.errors.any?
-      return systems_configuration
-    end
+    return systems_configuration if systems_configuration.errors.any?
 
     # Store configuration key values
 
     if config_key_values.present?
 
-      config_key_values.each_pair do |k, v| 
+      config_key_values.each_pair do |k, v|
 
-        key = ::Systems::ConfigurationKey.find(k.to_i)
-
-        v = v.symbolize_keys
-
-        config_value = ::Systems::ConfigurationValue.create(institution: @institution, configuration_key: key, value: v[:value])
+        config_value = create_system_configuration_value k, v, @institution
 
         # set cris system configuration key
 
@@ -80,6 +72,18 @@ class CreateSystemsConfiguration
     end
 
     systems_configuration
+
+  end
+
+  private
+
+  def create_system_configuration_value config_key_id, value, institution
+
+    key = ::Systems::ConfigurationKey.find(config_key_id.to_i)
+
+    value = value.symbolize_keys
+
+    ::Systems::ConfigurationValue.create(institution: institution, configuration_key: key, value: value[:value])
 
   end
 
