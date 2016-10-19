@@ -51,15 +51,11 @@ class CreateSystemsConfiguration
 
       end
 
-    end
-
-    return systems_configuration if systems_configuration.errors.any?
-
-    # Store configuration key values
-
-    if config_key_values.present?
+      return systems_configuration if systems_configuration.errors.any?
 
       config_key_values.each_pair do |k, v|
+
+        # Store configuration key values
 
         config_value = create_system_configuration_value k, v, @institution
 
