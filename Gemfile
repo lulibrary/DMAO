@@ -63,6 +63,10 @@ gem 'remotipart', '~> 1.3'
 # Active model serializers for api responses
 gem 'active_model_serializers', '~> 0.10.0'
 
+# Dot ENV gem
+
+gem 'dotenv-rails'
+
 # API Interaction
 gem 'rest-client'
 
