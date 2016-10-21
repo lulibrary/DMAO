@@ -4,9 +4,7 @@ one:
   name: MyString
   display_name: MyString
   secure: true
-  systemable: one (Systems::CrisSystem)
 
 two:
   name: MyString
   display_name: MyString
-  systemable: two (Systems::CrisSystem)
