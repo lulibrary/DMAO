@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161011080425) do
+ActiveRecord::Schema.define(version: 20161021153516) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,14 +72,6 @@ ActiveRecord::Schema.define(version: 20161011080425) do
     t.index ["institution_id"], name: "index_institution_admins_on_institution_id", using: :btree
     t.index ["reset_password_token"], name: "index_institution_admins_on_reset_password_token", unique: true, using: :btree
     t.index ["unlock_token"], name: "index_institution_admins_on_unlock_token", unique: true, using: :btree
-  end
-
-  create_table "institution_configurations", force: :cascade do |t|
-    t.json     "systems_configuration"
-    t.integer  "institution_id"
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
-    t.index ["institution_id"], name: "index_institution_configurations_on_institution_id", using: :btree
   end
 
   create_table "institution_organisation_units", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
@@ -144,36 +136,6 @@ ActiveRecord::Schema.define(version: 20161011080425) do
     t.index ["token"], name: "index_service_api_tokens_on_token", unique: true, using: :btree
   end
 
-  create_table "systems_configuration_keys", force: :cascade do |t|
-    t.string   "name"
-    t.string   "display_name"
-    t.string   "systemable_type"
-    t.integer  "systemable_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-    t.boolean  "secure"
-    t.index ["systemable_type", "systemable_id"], name: "index_systems_configuration_keys_on_systemable", using: :btree
-  end
-
-  create_table "systems_configuration_values", force: :cascade do |t|
-    t.string   "encrypted_value"
-    t.integer  "institution_id"
-    t.integer  "systems_configuration_key_id"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
-    t.index ["institution_id"], name: "index_systems_configuration_values_on_institution_id", using: :btree
-    t.index ["systems_configuration_key_id"], name: "index_configuration_values_on_configuration_key_id", using: :btree
-  end
-
-  create_table "systems_cris_systems", force: :cascade do |t|
-    t.string   "name"
-    t.text     "description"
-    t.integer  "version"
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
-    t.string   "organisation_ingester"
-  end
-
   create_table "versions", force: :cascade do |t|
     t.string   "item_type",  null: false
     t.integer  "item_id",    null: false
@@ -185,6 +147,4 @@ ActiveRecord::Schema.define(version: 20161011080425) do
   end
 
   add_foreign_key "ingest_jobs", "institutions"
-  add_foreign_key "systems_configuration_values", "institutions"
-  add_foreign_key "systems_configuration_values", "systems_configuration_keys"
 end
